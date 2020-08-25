@@ -30,12 +30,12 @@ public class FenLogin extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         jpwest = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        lblLogin = new javax.swing.JLabel();
+        lblPwd = new javax.swing.JLabel();
+        txtLogin = new javax.swing.JTextField();
+        txtPwd = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnConnexion = new javax.swing.JButton();
         btnQuitter = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -64,13 +64,13 @@ public class FenLogin extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("jLabel1");
+        lblLogin.setText("Login:");
 
-        jLabel2.setText("jLabel2");
+        lblPwd.setText("Password:");
 
-        jTextField1.setText("jTextField1");
+        txtLogin.setText("jTextField1");
 
-        jPasswordField1.setText("jPasswordField1");
+        txtPwd.setText("jPasswordField1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -79,12 +79,12 @@ public class FenLogin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(87, 87, 87)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(lblLogin)
+                    .addComponent(lblPwd))
                 .addGap(86, 86, 86)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPasswordField1)
-                    .addComponent(jTextField1))
+                    .addComponent(txtPwd)
+                    .addComponent(txtLogin))
                 .addContainerGap(82, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -92,16 +92,16 @@ public class FenLogin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(85, 85, 85)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblLogin)
+                    .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblPwd)
+                    .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(112, Short.MAX_VALUE))
         );
 
-        jButton1.setText("jButton1");
+        btnConnexion.setText("Connexion");
 
         btnQuitter.setText("Quitter");
         btnQuitter.addActionListener(new java.awt.event.ActionListener() {
@@ -116,7 +116,7 @@ public class FenLogin extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addComponent(jButton1)
+                .addComponent(btnConnexion)
                 .addGap(76, 76, 76)
                 .addComponent(btnQuitter)
                 .addContainerGap(211, Short.MAX_VALUE))
@@ -126,7 +126,7 @@ public class FenLogin extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnConnexion)
                     .addComponent(btnQuitter))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
@@ -144,7 +144,7 @@ public class FenLogin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(140, 140, 140)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,15 +169,15 @@ public class FenLogin extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConnexion;
     private javax.swing.JButton btnQuitter;
-    private javax.swing.JButton jButton1;
     private javax.swing.JFrame jFrame1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel jpwest;
+    private javax.swing.JLabel lblLogin;
+    private javax.swing.JLabel lblPwd;
+    private javax.swing.JTextField txtLogin;
+    private javax.swing.JPasswordField txtPwd;
     // End of variables declaration//GEN-END:variables
 }
