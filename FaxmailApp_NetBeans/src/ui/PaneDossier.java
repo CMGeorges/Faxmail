@@ -6,7 +6,8 @@
 package ui;
 
 /**
- *
+ *Pane Dossier 
+ * Interface Graphic d'une fenetre d'un dossier ouvert.
  * @author camsl
  */
 public class PaneDossier extends javax.swing.JPanel {

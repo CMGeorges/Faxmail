@@ -7,9 +7,10 @@ package ui;
 
 import java.awt.Image;
 import java.awt.Toolkit;
+import utilitaire.Controleur;
 
 /**
- *
+ *Fenêtre d'ouverture 
  * @author camsl
  */
 public class FenLogin extends javax.swing.JFrame {
@@ -206,12 +207,31 @@ public class FenLogin extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnQuitterActionPerformed
 
+    /**
+     * Lorsque le btnConnexion est presser la saisie du contenue txtLogin et txtPwd
+     * est prise en charge et implementer dans une méthode de vérification de connexion.
+     * @param evt 
+     * @return PaneAcceuil     * 
+     */
     private void btnConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnexionActionPerformed
         // TODO add your handling code here:
+        try {
+                    Controleur.ConnexionUtilisateur(txtLogin.getText(),txtPwd.getText());
+                    this.setContentPane(new PaneAcceuil(txtLogin.getText()));
+
+        } catch (Exception e) {
+            System.out.println("L'utilisateur ou le Mot de passe inséré sont incorrecte");
+        }finally{
+            
+        }
         
-        this.setContentPane(new PaneAcceuil(txtLogin.getText()));
     }//GEN-LAST:event_btnConnexionActionPerformed
 
+    /**
+     * Insertion de l'image de L'interface d'ouverture de l'application.
+     * @param "/Images/medical,images.png"
+     * @param evt 
+     */
     private void lblImageComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_lblImageComponentAdded
         // TODO add your handling code here:
         this.lblImage.getClass().getResource("/Images/medical,images.png");

@@ -14,6 +14,7 @@ import ui.FenLogin;
 public class AppCtr {
 
 /**
+ * méthode Main
      * @param args the command line arguments
      */
     public static void main(String args[]) {

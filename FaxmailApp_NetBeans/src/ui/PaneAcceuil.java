@@ -12,6 +12,8 @@ import javax.swing.plaf.ScrollPaneUI;
 
 /**
  *
+ * Page d'acceuil d'ouverture de session.
+ * 
  * @author camsl
  */
 public class PaneAcceuil extends javax.swing.JPanel {
@@ -22,7 +24,13 @@ public class PaneAcceuil extends javax.swing.JPanel {
     public PaneAcceuil() {
         initComponents();
     }
+    
 
+    /**
+     * Creates new form PaneAcceuil
+     * avec le message d'acceuil suivie du paramètre.
+     * @param text 
+     */
     PaneAcceuil(String text) {
         initComponents();
         this.jlblAccount.setText("Bienvenue " + text);
@@ -226,6 +234,13 @@ public class PaneAcceuil extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Lorsque le btnConsulter est presser la page du  Dossier selectionné
+     * s'affichera.
+     * 
+     * @param evt 
+     * @return PaneDossier(Dossier)
+     */
     private void btnConsulterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsulterActionPerformed
 //        // TODO add your handling code here:
         
