@@ -58,6 +58,7 @@ public class FenLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faxmail");
+        setResizable(false);
 
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/medical,images.png"))); // NOI18N
         lblImage.addContainerListener(new java.awt.event.ContainerAdapter() {
@@ -135,6 +136,7 @@ public class FenLogin extends javax.swing.JFrame {
         btnConnexion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, null, java.awt.Color.darkGray, java.awt.Color.darkGray, java.awt.Color.darkGray));
         btnConnexion.setMaximumSize(new java.awt.Dimension(45, 22));
         btnConnexion.setMinimumSize(new java.awt.Dimension(45, 22));
+        btnConnexion.setPreferredSize(new java.awt.Dimension(90, 32));
         btnConnexion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnConnexionActionPerformed(evt);

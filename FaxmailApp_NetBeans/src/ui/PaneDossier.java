@@ -41,6 +41,8 @@ public class PaneDossier extends javax.swing.JPanel {
         btnEnregistrer = new javax.swing.JButton();
         lblNotificationNouveauDeclaration = new javax.swing.JLabel();
 
+        setAutoscrolls(true);
+
         lblNomPrenom.setText("Nom  + Prenom");
 
         lblNoDossier.setText("NoDossier");

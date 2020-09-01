@@ -156,7 +156,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 .addGroup(jpCenterALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDernierDossier, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(244, Short.MAX_VALUE))
         );
 
         jScrollPane4.setViewportView(jpCenterA);
@@ -228,12 +228,13 @@ public class PaneAcceuil extends javax.swing.JPanel {
 
     private void btnConsulterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsulterActionPerformed
 //        // TODO add your handling code here:
-//        ScrollPaneUI ui = new ScrollPaneUI() {
-//            PaneDossier dossier = new PaneDossier();
-//        };
-//        //this.jScrollPane4.removeAll();
-//        //this.jpCenterA.setVisible(false);
-//        this.jScrollPane4.setUI(ui);
+        
+        PaneDossier dossier = new PaneDossier();
+            
+        this.jScrollPane4.setVisible(false);
+        this.jpCenterA.add(dossier);
+        
+        //this.jScrollPane4.add(dossier);
         
     }//GEN-LAST:event_btnConsulterActionPerformed
 
@@ -246,9 +247,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
     private javax.swing.JButton btnModifier;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList11;
     private javax.swing.JList<String> jList2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -258,18 +257,12 @@ public class PaneAcceuil extends javax.swing.JPanel {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
     protected javax.swing.JLabel jlblAccount;
-    private javax.swing.JPanel jp9;
     private javax.swing.JPanel jpCenterA;
     private javax.swing.JLabel lblDernierDossier;
-    private javax.swing.JLabel lblNoDossier9;
-    private javax.swing.JLabel lblNomPrenom9;
     private javax.swing.JLabel lblNouveauDossier;
-    private javax.swing.JLabel lblRegion9;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;
