@@ -10,5 +10,20 @@ package Modele;
  * @author camsl
  */
 public class Dossier {
+    private int numDossier;
+    private Patient patient;
+
+    public Dossier() {
+    }
+
+    /**
+     * 
+     * @param numDossier
+     * @param patient 
+     */
+    public Dossier(int numDossier, Patient patient) {
+        this.numDossier = numDossier;
+        this.patient = patient;
+    }
     
 }

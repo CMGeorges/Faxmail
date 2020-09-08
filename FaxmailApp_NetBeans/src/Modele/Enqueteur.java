@@ -12,5 +12,19 @@ package Modele;
  * @author camsl
  */
 public class Enqueteur extends Utilisateur{
+    private int matricule;
+
+    public Enqueteur(int matricule, String nomUtilisateur, String motDePasse) {
+        super(nomUtilisateur, motDePasse);
+        this.matricule = matricule;
+    }
+
+    public Enqueteur(String nomUtilisateur, String motDePasse) {
+        super(nomUtilisateur, motDePasse);
+    }
+    
+    
+    
+    
     
 }

@@ -5,6 +5,9 @@
  */
 package ui;
 
+import Control.AppCtr;
+import Data.ManipFichier;
+import Exception.TrueUserException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import utilitaire.Controleur;
@@ -33,6 +36,10 @@ public class FenLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
+        DialogErreur = new javax.swing.JDialog();
+        lblError = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAeraError = new javax.swing.JTextArea();
         jpwest = new javax.swing.JPanel();
         lblImage = new javax.swing.JLabel();
         jpCenter = new javax.swing.JPanel();
@@ -55,6 +62,48 @@ public class FenLogin extends javax.swing.JFrame {
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        DialogErreur.setTitle("Error!!");
+        DialogErreur.setMaximumSize(new java.awt.Dimension(400, 167));
+        DialogErreur.setMinimumSize(new java.awt.Dimension(400, 167));
+        DialogErreur.setModal(true);
+
+        lblError.setText("Error:");
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        txtAeraError.setEditable(false);
+        txtAeraError.setColumns(20);
+        txtAeraError.setForeground(new java.awt.Color(204, 0, 51));
+        txtAeraError.setLineWrap(true);
+        txtAeraError.setRows(5);
+        txtAeraError.setWrapStyleWord(true);
+        txtAeraError.setAutoscrolls(false);
+        txtAeraError.setCaretColor(new java.awt.Color(0, 102, 102));
+        txtAeraError.setDisabledTextColor(new java.awt.Color(0, 102, 102));
+        txtAeraError.setEnabled(false);
+        jScrollPane1.setViewportView(txtAeraError);
+
+        javax.swing.GroupLayout DialogErreurLayout = new javax.swing.GroupLayout(DialogErreur.getContentPane());
+        DialogErreur.getContentPane().setLayout(DialogErreurLayout);
+        DialogErreurLayout.setHorizontalGroup(
+            DialogErreurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogErreurLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(lblError)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(99, Short.MAX_VALUE))
+        );
+        DialogErreurLayout.setVerticalGroup(
+            DialogErreurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogErreurLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(DialogErreurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblError)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(43, 43, 43))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,7 +137,11 @@ public class FenLogin extends javax.swing.JFrame {
 
         lblPwd.setText("Password:");
 
-        txtPwd.setText("jPasswordField1");
+        txtPwd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPwdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpCenterLayout = new javax.swing.GroupLayout(jpCenter);
         jpCenter.setLayout(jpCenterLayout);
@@ -103,11 +156,11 @@ public class FenLogin extends javax.swing.JFrame {
                         .addGroup(jpCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblLogin)
                             .addComponent(lblPwd))
-                        .addGap(86, 86, 86)
+                        .addGap(7, 7, 7)
                         .addGroup(jpCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPwd)
-                            .addComponent(txtLogin))
-                        .addContainerGap(82, Short.MAX_VALUE))
+                            .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                            .addComponent(txtPwd))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jpCenterLayout.createSequentialGroup()
                         .addComponent(jSeparator1)
                         .addContainerGap())))
@@ -185,7 +238,7 @@ public class FenLogin extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(86, Short.MAX_VALUE))))
+                        .addContainerGap(144, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,15 +268,23 @@ public class FenLogin extends javax.swing.JFrame {
      */
     private void btnConnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnexionActionPerformed
         // TODO add your handling code here:
+        
         try {
-                    Controleur.ConnexionUtilisateur(txtLogin.getText(),txtPwd.getText());
-                    this.setContentPane(new PaneAcceuil(txtLogin.getText()));
-
-        } catch (Exception e) {
-            System.out.println("L'utilisateur ou le Mot de passe inséré sont incorrecte");
-        }finally{
-            
+            ManipFichier.lectureFichier("UtilisateurData.txt", AppCtr.utilisateurs);
+                        //System.out.println("Test"+AppCtr.utilisateurs);
+                    if (Controleur.ConnexionUtilisateur(txtLogin.getText(),txtPwd.getText())==true) {
+                        
+                this.setContentPane(new PaneAcceuil(txtLogin.getText()));
+                            
+            }
+        } catch (TrueUserException e) {
+            System.out.println(e.getMessage());
+            txtAeraError.setText(e.getMessage());
+            DialogErreur.setVisible(true);
+            DialogErreur.isFocusableWindow();           
+           
         }
+        
         
     }//GEN-LAST:event_btnConnexionActionPerformed
 
@@ -237,20 +298,28 @@ public class FenLogin extends javax.swing.JFrame {
         this.lblImage.getClass().getResource("/Images/medical,images.png");
     }//GEN-LAST:event_lblImageComponentAdded
 
+    private void txtPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPwdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPwdActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog DialogErreur;
     private javax.swing.JButton btnConnexion;
     private javax.swing.JButton btnQuitter;
     private javax.swing.JFrame jFrame1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPanel jpCenter;
     private javax.swing.JPanel jpwest;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblLogin;
     private javax.swing.JLabel lblPwd;
+    private javax.swing.JTextArea txtAeraError;
     private javax.swing.JTextField txtLogin;
     private javax.swing.JPasswordField txtPwd;
     // End of variables declaration//GEN-END:variables
