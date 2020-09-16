@@ -52,9 +52,9 @@ public class FenLogin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         btnConnexion = new javax.swing.JButton();
         btnQuitter = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
 
         DialogErreur.setTitle("Error!!");
-        DialogErreur.setMaximumSize(new java.awt.Dimension(400, 167));
         DialogErreur.setMinimumSize(new java.awt.Dimension(400, 167));
         DialogErreur.setModal(true);
         DialogErreur.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -143,21 +143,20 @@ public class FenLogin extends javax.swing.JFrame {
             jpCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpCenterLayout.createSequentialGroup()
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpCenterLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
+                        .addGap(93, 93, 93)
                         .addGroup(jpCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblLogin)
                             .addComponent(lblPwd))
                         .addGap(7, 7, 7)
                         .addGroup(jpCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
-                            .addComponent(txtPwd))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jpCenterLayout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())))
+                            .addComponent(txtPwd)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCenterLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jpCenterLayout.setVerticalGroup(
             jpCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,6 +220,8 @@ public class FenLogin extends javax.swing.JFrame {
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
+        jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,7 +233,9 @@ public class FenLogin extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(144, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(113, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,7 +243,8 @@ public class FenLogin extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jpCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jpwest, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jpwest, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -313,6 +317,7 @@ public class FenLogin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPanel jpCenter;
     private javax.swing.JPanel jpwest;
     private javax.swing.JLabel lblError;

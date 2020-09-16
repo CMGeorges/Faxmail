@@ -11,11 +11,16 @@ import Data.ManipFichier;
 import Modele.Agent;
 import Modele.Enqueteur;
 import Modele.Folder;
+import java.awt.Component;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
+import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 
 /**
  *
@@ -42,15 +47,18 @@ public class PaneAcceuil extends javax.swing.JPanel {
     PaneAcceuil(Agent agt) {
         initComponents();
         if (agt.getClass()!=Enqueteur.class) {
-         this.jlblAccount.setText("Bienvenue " + agt.getNomUtilisateur());
-        System.out.println(agt.getNomUtilisateur()); 
+            this.jlblAccount.setText("Bienvenue " + agt.getNomUtilisateur());
+                        System.out.println(agt.getNomUtilisateur()); 
          try {
-                this.jListDossiers.removeAll();
                 ManipFichier.LectureObjet("FoldersData.bin", folds);
-                Set dos= new TreeSet();
+                jListDossiers.removeAll();
+                jListDossiers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                DefaultListModel<String> model = new DefaultListModel<>();             
+                
                 for(Folder fo: folds)
-                    dos.add(fo.getNumDossier());
-                this.jListDossiers.setListData((Vector<? extends String>) dos.iterator()); 
+                    model.addElement(String.valueOf( fo.getNumDossier()));
+                System.out.println(model);
+                jListDossiers.setModel(model); 
             } catch (NullPointerException e) {
                 System.out.println(e.getMessage());               
             txtAeraError.setText(e.getMessage());
@@ -63,7 +71,13 @@ public class PaneAcceuil extends javax.swing.JPanel {
         //this.jListDossiers.setAutoscrolls(true);
             try {
                 this.jListDossiers.removeAll();
-                this.jListDossiers.setListData((String[]) folds.findFolders(e1).toArray()); 
+                DefaultListModel<String> model = new DefaultListModel<>();             
+                
+                for(Folder fo: folds.findFolders(e1))
+                    model.addElement(String.valueOf( fo.getNumDossier()));
+                System.out.println(model);
+                //jListDossiers.setModel(model); 
+               // this.jListDossiers.setListData((String[]) folds.findFolders(e1).toArray()); 
             } catch (NullPointerException e) {
                 System.out.println(e.getMessage());               
             txtAeraError.setText(e.getMessage());
@@ -88,42 +102,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         lblError = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         txtAeraError = new javax.swing.JTextArea();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListDossiers = new javax.swing.JList<>();
-        btnEnregistrer = new javax.swing.JButton();
-        btnFermer = new javax.swing.JButton();
-        jlblAccount = new javax.swing.JLabel();
-        btnDeconnecter = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jpNouveaute = new javax.swing.JPanel();
-        lblNDossier = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        TabNDossier = new javax.swing.JTable();
-        lblRappel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jpDossier = new javax.swing.JPanel();
-        lblDNom = new javax.swing.JLabel();
-        lblDPrenom = new javax.swing.JLabel();
-        lblDMiddleName = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        lblAdresse = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tabAnterieur = new javax.swing.JTable();
-        jComboSexe = new javax.swing.JComboBox<>();
-        txtDNom = new javax.swing.JTextField();
-        txtDPrenom = new javax.swing.JTextField();
-        txtDMiddleName = new javax.swing.JTextField();
-        txtDDAteDeNaissance = new javax.swing.JTextField();
-        txtDAdresse = new javax.swing.JTextField();
-        txtDCourriel = new javax.swing.JTextField();
-        txtDREgion = new javax.swing.JTextField();
+        jFDeclaration = new javax.swing.JFrame();
         jpDeclaration = new javax.swing.JPanel();
         lblDeclarant = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -166,11 +145,50 @@ public class PaneAcceuil extends javax.swing.JPanel {
         txtNomDemande = new javax.swing.JFormattedTextField();
         txtResultat = new javax.swing.JFormattedTextField();
         txtAnalyse = new javax.swing.JFormattedTextField();
+        btnCancelDec = new javax.swing.JButton();
+        btnSaveDec = new javax.swing.JButton();
+        jInternalFrame1 = new javax.swing.JInternalFrame();
+        jSPList = new javax.swing.JScrollPane();
+        jListDossiers = new javax.swing.JList<>();
+        btnEnregistrer = new javax.swing.JButton();
+        btnFermer = new javax.swing.JButton();
+        jlblAccount = new javax.swing.JLabel();
+        btnDeconnecter = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jpNouveaute = new javax.swing.JPanel();
+        lblNDossier = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TabNDossier = new javax.swing.JTable();
+        lblRappel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jpDossier = new javax.swing.JPanel();
+        lblDNom = new javax.swing.JLabel();
+        lblDPrenom = new javax.swing.JLabel();
+        lblDMiddleName = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblAdresse = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabAnterieur = new javax.swing.JTable();
+        jComboSexe = new javax.swing.JComboBox<>();
+        txtDNom = new javax.swing.JTextField();
+        txtDPrenom = new javax.swing.JTextField();
+        txtDMiddleName = new javax.swing.JTextField();
+        txtDDAteDeNaissance = new javax.swing.JTextField();
+        txtDAdresse = new javax.swing.JTextField();
+        txtDCourriel = new javax.swing.JTextField();
+        txtDREgion = new javax.swing.JTextField();
+        btnAddDec = new javax.swing.JButton();
+        btnConsult = new javax.swing.JButton();
         btnModifier = new javax.swing.JButton();
         btnConsulter = new javax.swing.JButton();
 
         DialogErreur.setTitle("Error!!");
-        DialogErreur.setMaximumSize(new java.awt.Dimension(400, 167));
         DialogErreur.setMinimumSize(new java.awt.Dimension(400, 167));
         DialogErreur.setModal(true);
         DialogErreur.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
@@ -216,16 +234,317 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 .addGap(43, 43, 43))
         );
 
+        jpDeclaration.setPreferredSize(new java.awt.Dimension(645, 600));
+
+        lblDeclarant.setLabelFor(txtDeclarant);
+        lblDeclarant.setText("Déclarant:");
+
+        jLabel3.setLabelFor(txtNomPatient);
+        jLabel3.setText("Nom du patient:");
+
+        lblDateDeNaissance.setLabelFor(txtDateDeNaissance);
+        lblDateDeNaissance.setText("Date de naissance:");
+
+        lblDeAdresse.setLabelFor(txtDeAdresse);
+        lblDeAdresse.setText("Adresse:");
+
+        lblNAM.setLabelFor(txtNumASsM);
+        lblNAM.setText("Numéro d'assurance maladie:");
+
+        lblDeTel.setLabelFor(txtDeTel);
+        lblDeTel.setText("Téléphone:");
+
+        txtNomPatient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomPatientActionPerformed(evt);
+            }
+        });
+
+        txtDateDeNaissance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDateDeNaissanceActionPerformed(evt);
+            }
+        });
+
+        TxtAeraNote.setColumns(20);
+        TxtAeraNote.setRows(5);
+        jScrollPane5.setViewportView(TxtAeraNote);
+
+        Tab_notes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Date", "Enqueteur"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(Tab_notes);
+
+        jLabel2.setText("Notes:");
+
+        lblDrDemandeur.setLabelFor(txtDrDemandeur);
+        lblDrDemandeur.setText("Nom du médecin demandeur:");
+
+        lblPermis.setLabelFor(txtPermis);
+        lblPermis.setText("Numéro du permis d'exercice:");
+
+        lblMilieuConsult.setLabelFor(txtMilieuConsult);
+        lblMilieuConsult.setText("Milieu de consultation:");
+
+        lblAdresseDr.setLabelFor(txtAdresseDr);
+        lblAdresseDr.setText("Adresse médecin demandeur:");
+
+        lblDatePre.setLabelFor(txtDatePrelevement);
+        lblDatePre.setText("Date de prélèvement:");
+
+        jLabel14.setText("Site de prélèvement:");
+
+        lblTypePre.setLabelFor(txtTypePre);
+        lblTypePre.setText("Type de prélèvement:");
+
+        lblNomDemande.setLabelFor(txtNomDemande);
+        lblNomDemande.setText("Nom de la demande:");
+
+        lblDateExecution.setLabelFor(txtDateExecu);
+        lblDateExecution.setText("Date d'exécution:");
+
+        lblResultat.setLabelFor(txtResultat);
+        lblResultat.setText("Résultat:");
+
+        lblAnalyse.setLabelFor(txtAnalyse);
+        lblAnalyse.setText("Analyse:");
+
+        btnCancelDec.setText("Annuler");
+        btnCancelDec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelDecActionPerformed(evt);
+            }
+        });
+
+        btnSaveDec.setText("Sauvegarder");
+        btnSaveDec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveDecActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpDeclarationLayout = new javax.swing.GroupLayout(jpDeclaration);
+        jpDeclaration.setLayout(jpDeclarationLayout);
+        jpDeclarationLayout.setHorizontalGroup(
+            jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDeclarationLayout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpDeclarationLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblDeTel)
+                                    .addComponent(jLabel3)
+                                    .addComponent(lblDeclarant)
+                                    .addComponent(lblDateDeNaissance))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtDeclarant, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtNomPatient, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                                .addComponent(txtDateDeNaissance))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                                    .addComponent(lblDeAdresse)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtDeAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                                    .addComponent(lblNAM)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(txtNumASsM, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtDeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(6, 6, 6))
+                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                .addComponent(btnSaveDec)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelDec)))
+                        .addGroup(jpDeclarationLayout.createSequentialGroup()
+                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                            .addComponent(lblNomDemande)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtNomDemande, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(lblAnalyse)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(txtAnalyse, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                        .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                                    .addComponent(lblDatePre)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addComponent(txtDatePrelevement, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                                    .addGap(6, 6, 6)
+                                                    .addComponent(jLabel14)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                    .addComponent(txtDeTel5, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(56, 56, 56)))
+                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lblTypePre)
+                                        .addComponent(lblDateExecution)
+                                        .addComponent(lblResultat))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtResultat, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtDateExecu, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtTypePre, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jpDeclarationLayout.createSequentialGroup()
+                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblDrDemandeur)
+                                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(lblAdresseDr, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblPermis, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtPermis, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtDrDemandeur, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtAdresseDr, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(23, 23, 23)))
+                    .addGroup(jpDeclarationLayout.createSequentialGroup()
+                        .addComponent(lblMilieuConsult)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtMilieuConsult, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        jpDeclarationLayout.setVerticalGroup(
+            jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpDeclarationLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDeclarant)
+                    .addComponent(txtDeclarant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpDeclarationLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDeAdresse)
+                            .addComponent(txtDeAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jpDeclarationLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtNomPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDateDeNaissance)
+                            .addComponent(txtDateDeNaissance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNAM)
+                            .addComponent(txtNumASsM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDeTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDrDemandeur, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDrDemandeur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPermis)
+                    .addComponent(txtPermis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblMilieuConsult)
+                    .addComponent(txtMilieuConsult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAdresseDr)
+                    .addComponent(txtAdresseDr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDatePre)
+                    .addComponent(lblTypePre)
+                    .addComponent(txtDatePrelevement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTypePre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(lblDateExecution)
+                    .addComponent(txtDeTel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDateExecu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNomDemande)
+                    .addComponent(lblResultat)
+                    .addComponent(txtNomDemande, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtResultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAnalyse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAnalyse))
+                .addGap(36, 36, 36)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelDec)
+                    .addComponent(btnSaveDec))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jFDeclarationLayout = new javax.swing.GroupLayout(jFDeclaration.getContentPane());
+        jFDeclaration.getContentPane().setLayout(jFDeclarationLayout);
+        jFDeclarationLayout.setHorizontalGroup(
+            jFDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 645, Short.MAX_VALUE)
+            .addGroup(jFDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFDeclarationLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jpDeclaration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jFDeclarationLayout.setVerticalGroup(
+            jFDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 646, Short.MAX_VALUE)
+            .addGroup(jFDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFDeclarationLayout.createSequentialGroup()
+                    .addGap(0, 6, Short.MAX_VALUE)
+                    .addComponent(jpDeclaration, javax.swing.GroupLayout.PREFERRED_SIZE, 640, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+
         jInternalFrame1.setVisible(true);
 
-        jScrollPane1.setMaximumSize(new java.awt.Dimension(710, 370));
+        jSPList.setMaximumSize(new java.awt.Dimension(710, 370));
 
         jListDossiers.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "NoDossier 1", "NoDossier 2", "NoDossier 3", "NoDossier 4", "NoDossier 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jListDossiers);
+        jSPList.setViewportView(jListDossiers);
 
         btnEnregistrer.setText("Enregistrer");
         btnEnregistrer.setMaximumSize(new java.awt.Dimension(103, 32));
@@ -357,6 +676,10 @@ public class PaneAcceuil extends javax.swing.JPanel {
 
         jComboSexe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F", "T" }));
 
+        btnAddDec.setText("+");
+
+        btnConsult.setText("Consulter");
+
         javax.swing.GroupLayout jpDossierLayout = new javax.swing.GroupLayout(jpDossier);
         jpDossier.setLayout(jpDossierLayout);
         jpDossierLayout.setHorizontalGroup(
@@ -376,10 +699,10 @@ public class PaneAcceuil extends javax.swing.JPanel {
                                     .addComponent(jLabel7)
                                     .addComponent(lblAdresse)
                                     .addComponent(lblDNom))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpDossierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtDAdresse, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDCourriel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jpDossierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtDAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDCourriel, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jpDossierLayout.createSequentialGroup()
                                         .addGroup(jpDossierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDossierLayout.createSequentialGroup()
@@ -404,10 +727,16 @@ public class PaneAcceuil extends javax.swing.JPanel {
                                             .addGroup(jpDossierLayout.createSequentialGroup()
                                                 .addComponent(lblDMiddleName)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtDMiddleName, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(84, 84, 84))))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 47, Short.MAX_VALUE)))
+                                                .addComponent(txtDMiddleName, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE))
+                            .addGroup(jpDossierLayout.createSequentialGroup()
+                                .addGroup(jpDossierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jpDossierLayout.createSequentialGroup()
+                                        .addComponent(btnConsult)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnAddDec))
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jpDossierLayout.setVerticalGroup(
@@ -441,275 +770,16 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
                 .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpDossierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddDec)
+                    .addComponent(btnConsult))
+                .addContainerGap(514, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Dossier", jpDossier);
-
-        jpDeclaration.setPreferredSize(new java.awt.Dimension(645, 600));
-
-        lblDeclarant.setLabelFor(txtDeclarant);
-        lblDeclarant.setText("Déclarant:");
-
-        jLabel3.setLabelFor(txtNomPatient);
-        jLabel3.setText("Nom du patient:");
-
-        lblDateDeNaissance.setLabelFor(txtDateDeNaissance);
-        lblDateDeNaissance.setText("Date de naissance:");
-
-        lblDeAdresse.setLabelFor(txtDeAdresse);
-        lblDeAdresse.setText("Adresse:");
-
-        lblNAM.setLabelFor(txtNumASsM);
-        lblNAM.setText("Numéro d'assurance maladie:");
-
-        lblDeTel.setLabelFor(txtDeTel);
-        lblDeTel.setText("Téléphone:");
-
-        txtNomPatient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomPatientActionPerformed(evt);
-            }
-        });
-
-        txtDateDeNaissance.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDateDeNaissanceActionPerformed(evt);
-            }
-        });
-
-        TxtAeraNote.setColumns(20);
-        TxtAeraNote.setRows(5);
-        jScrollPane5.setViewportView(TxtAeraNote);
-
-        Tab_notes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Date", "Enqueteur"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane6.setViewportView(Tab_notes);
-
-        jLabel2.setText("Notes:");
-
-        lblDrDemandeur.setLabelFor(txtDrDemandeur);
-        lblDrDemandeur.setText("Nom du médecin demandeur:");
-
-        lblPermis.setLabelFor(txtPermis);
-        lblPermis.setText("Numéro du permis d'exercice:");
-
-        lblMilieuConsult.setLabelFor(txtMilieuConsult);
-        lblMilieuConsult.setText("Milieu de consultation:");
-
-        lblAdresseDr.setLabelFor(txtAdresseDr);
-        lblAdresseDr.setText("Adresse médecin demandeur:");
-
-        lblDatePre.setLabelFor(txtDatePrelevement);
-        lblDatePre.setText("Date de prélèvement:");
-
-        jLabel14.setText("Site de prélèvement:");
-
-        lblTypePre.setLabelFor(txtTypePre);
-        lblTypePre.setText("Type de prélèvement:");
-
-        lblNomDemande.setLabelFor(txtNomDemande);
-        lblNomDemande.setText("Nom de la demande:");
-
-        lblDateExecution.setLabelFor(txtDateExecu);
-        lblDateExecution.setText("Date d'exécution:");
-
-        lblResultat.setLabelFor(txtResultat);
-        lblResultat.setText("Résultat:");
-
-        lblAnalyse.setLabelFor(txtAnalyse);
-        lblAnalyse.setText("Analyse:");
-
-        javax.swing.GroupLayout jpDeclarationLayout = new javax.swing.GroupLayout(jpDeclaration);
-        jpDeclaration.setLayout(jpDeclarationLayout);
-        jpDeclarationLayout.setHorizontalGroup(
-            jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDeclarationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpDeclarationLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblDeTel)
-                                    .addComponent(jLabel3)
-                                    .addComponent(lblDeclarant)
-                                    .addComponent(lblDateDeNaissance))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtDeclarant, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(txtNomPatient, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                                .addComponent(txtDateDeNaissance))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                                    .addComponent(lblDeAdresse)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(txtDeAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                                    .addComponent(lblNAM)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(txtNumASsM, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                    .addComponent(txtDeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(6, 6, 6))
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jpDeclarationLayout.createSequentialGroup()
-                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                            .addComponent(lblNomDemande)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtNomDemande, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(lblAnalyse)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(txtAnalyse, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                        .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                            .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                                    .addComponent(lblDatePre)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                    .addComponent(txtDatePrelevement, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                                    .addGap(6, 6, 6)
-                                                    .addComponent(jLabel14)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                    .addComponent(txtDeTel5, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                            .addGap(56, 56, 56)))
-                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lblTypePre)
-                                        .addComponent(lblDateExecution)
-                                        .addComponent(lblResultat))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtResultat, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtDateExecu, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtTypePre, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(jpDeclarationLayout.createSequentialGroup()
-                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblDrDemandeur)
-                                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(lblAdresseDr, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(lblPermis, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtPermis, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtDrDemandeur, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtAdresseDr, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(23, 23, 23)))
-                    .addGroup(jpDeclarationLayout.createSequentialGroup()
-                        .addComponent(lblMilieuConsult)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtMilieuConsult, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(62, Short.MAX_VALUE))
-        );
-        jpDeclarationLayout.setVerticalGroup(
-            jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpDeclarationLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDeclarant)
-                    .addComponent(txtDeclarant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpDeclarationLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDeAdresse)
-                            .addComponent(txtDeAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jpDeclarationLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtNomPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDateDeNaissance)
-                            .addComponent(txtDateDeNaissance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNAM)
-                            .addComponent(txtNumASsM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDeTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDrDemandeur, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDrDemandeur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPermis)
-                    .addComponent(txtPermis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblMilieuConsult)
-                    .addComponent(txtMilieuConsult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAdresseDr)
-                    .addComponent(txtAdresseDr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDatePre)
-                    .addComponent(lblTypePre)
-                    .addComponent(txtDatePrelevement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTypePre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(lblDateExecution)
-                    .addComponent(txtDeTel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDateExecu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNomDemande)
-                    .addComponent(lblResultat)
-                    .addComponent(txtNomDemande, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtResultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtAnalyse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAnalyse))
-                .addGap(36, 36, 36)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(297, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Déclaration", jpDeclaration);
 
         jScrollPane4.setViewportView(jTabbedPane1);
 
@@ -737,7 +807,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                             .addComponent(btnDeconnecter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnFermer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnEnregistrer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSPList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnConsulter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -754,7 +824,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jSPList, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(35, 35, 35)
                         .addComponent(btnConsulter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -821,18 +891,31 @@ public class PaneAcceuil extends javax.swing.JPanel {
 
     }//GEN-LAST:event_DialogErreurPropertyChange
 
+    private void btnSaveDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveDecActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveDecActionPerformed
+
+    private void btnCancelDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelDecActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelDecActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog DialogErreur;
     private javax.swing.JTable TabNDossier;
     private javax.swing.JTable Tab_notes;
     private javax.swing.JTextArea TxtAeraNote;
+    private javax.swing.JButton btnAddDec;
+    private javax.swing.JButton btnCancelDec;
+    private javax.swing.JButton btnConsult;
     private javax.swing.JButton btnConsulter;
     private javax.swing.JButton btnDeconnecter;
     private javax.swing.JButton btnEnregistrer;
     private javax.swing.JButton btnFermer;
     private javax.swing.JButton btnModifier;
+    private javax.swing.JButton btnSaveDec;
     private javax.swing.JComboBox<String> jComboSexe;
+    private javax.swing.JFrame jFDeclaration;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -844,7 +927,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList<String> jListDossiers;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jSPList;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;

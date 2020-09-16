@@ -55,11 +55,11 @@ public class ManipFichier {
      */
     public static void lectureFichier(String nomFichier,UserList datas) throws TrueUserException{
         FileReader fr = null;
-        
+        BufferedReader br=null;
         try {
             File file = new File(nomFichier);
             fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+            br = new BufferedReader(fr);
             //la lecture 
             String ligne;
             while ((ligne = br.readLine()) != null) {                
@@ -73,8 +73,6 @@ public class ManipFichier {
                     }
                 } catch (NullPointerException e) {
                     //System.out.println(e.getMessage());
-                }finally{
-                    
                 }
             }
         } catch (FileNotFoundException e) {
@@ -85,7 +83,10 @@ public class ManipFichier {
             try {
                 if (fr!=null) {
                     fr.close();
-                }                
+                } 
+                if (br!=null) {
+                    br.close();
+                }
             } catch (IOException ex) {
                 Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -225,6 +226,11 @@ public class ManipFichier {
         }
     }
 
+     /**
+      * 
+      * @param data
+      * @param monSet 
+      */
     public static void ecritureOblect(String data, Set monSet) {
          int count=0;
         File file =null;
@@ -271,6 +277,11 @@ public class ManipFichier {
         }
     }
 
+    /**
+     * 
+     * @param data
+     * @param utilisateurs 
+     */
     public static void LectureObjet(String data, UserList utilisateurs){
          int size = 0;        
         BufferedInputStream bi = null;            

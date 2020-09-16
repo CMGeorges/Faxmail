@@ -65,15 +65,4 @@ public class Controleur {
         }
         return result;
     }
-    
-    
-    /**
-     * ne fonctionne pas 
-     * @throws IOException 
-     */
-public static void restart() throws IOException{
-     Runtime.getRuntime().exec("C:\\Users\\camsl\\Documents\\NetBeansProjects\\Faxmail-77e405ea0d41be94d4ce59d256b28218dade9cbd\\FaxmailApp_NetBeans\\dist\\FaxmailApp_NetBeans.jar");
-     System.exit(0);
-}
-    
 }
