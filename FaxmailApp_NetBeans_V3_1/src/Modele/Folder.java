@@ -6,6 +6,7 @@
 package Modele;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  *les dossiers des patients 
@@ -96,5 +97,15 @@ public class Folder implements Serializable,Comparable<Folder>{
     }@Override
     public String toString() {
         return " "+ numDossier;
+    }
+
+    /**
+     * 
+     * @param NouvelleDeclaration 
+     */
+    public void addNewEpisode(Declaration NouvelleDeclaration) {
+        NouvelleDeclaration.setNoEven(numDossier + (int)Calendar.DATE);
+        this.getEpisodes().add(NouvelleDeclaration);
+        System.out.println("Nouveau dossier ajouté");
     }
 }

@@ -23,12 +23,22 @@ public class Declaration implements Serializable, Comparable<Declaration>{
     //Patient
         private String nomPatient,sexe,numAssMAl,dateDeNaissance,tel,status;
     //Medecin
-        private String nomDr,milieuDeConsultation;
-        private Adresse adresseDuDemandeur;
+        private String nomDr,milieuDeConsultation,permis;
+        private String adresseDuDemandeur;
+
     //Laboratoire
         private Date dateDePre,dateExecution;
         private String typeDePre,siteDePre,nomDemande,analyse,resultat;
-        public String getDeclarant() {
+    
+
+    public String getPermis() {
+        return permis;
+    }
+
+    public void setPermis(String permis) {
+        this.permis = permis;    
+         }
+    public String getDeclarant() {
         return declarant;
     }
         
@@ -39,6 +49,7 @@ public class Declaration implements Serializable, Comparable<Declaration>{
     public void setStatus(String status) {
         this.status = status;
     }
+    
     public void setDeclarant(String declarant) {
         this.declarant = declarant;
     }
@@ -94,12 +105,15 @@ public class Declaration implements Serializable, Comparable<Declaration>{
     public String getMilieuDeConsultation() {
         return milieuDeConsultation;
     }
+    public void setAdresseDuDemandeur(String adresseDuDemandeur) {
+        this.adresseDuDemandeur = adresseDuDemandeur;
+    }
 
     public void setMilieuDeConsultation(String milieuDeConsultation) {
         this.milieuDeConsultation = milieuDeConsultation;
     }
 
-    public Adresse getAdresseDuDemandeur() {
+    public String getAdresseDuDemandeur() {
         return adresseDuDemandeur;
     }
 
@@ -159,6 +173,10 @@ public class Declaration implements Serializable, Comparable<Declaration>{
     public void setResultat(String resultat) {
         this.resultat = resultat;
     }
+
+    public Declaration() {
+    }
+    
     /**
  * 
  * @param noEven
@@ -180,7 +198,7 @@ public class Declaration implements Serializable, Comparable<Declaration>{
  * @param analyse
  * @param resultat 
  */
-    public Declaration(int noEven, String declarant, String nomPatient, String sexe, String numAssMAl, String dateDeNaissance, String tel, String status, String nomDr, String milieuDeConsultation, Adresse adresseDuDemandeur, Date dateDePre, Date dateExecution, String typeDePre, String siteDePre, String nomDemande, String analyse, String resultat) {
+    public Declaration(int noEven, String declarant, String nomPatient, String sexe, String numAssMAl, String dateDeNaissance, String tel, String status, String nomDr, String milieuDeConsultation, String adresseDuDemandeur, Date dateDePre, Date dateExecution, String typeDePre, String siteDePre, String nomDemande, String analyse, String resultat) {
         this.noEven = noEven;
         this.declarant = declarant;
         this.nomPatient = nomPatient;

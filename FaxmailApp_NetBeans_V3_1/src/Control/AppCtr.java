@@ -6,7 +6,6 @@
 package Control;
 
 import Data.ManipFichier;
-import Exception.TrueUserException;
 import Modele.Adresse;
 import Modele.UserList;
 import Modele.Agent;
@@ -15,15 +14,16 @@ import Modele.Episode;
 import Modele.Folder;
 import Modele.FoldersList;
 import Modele.Patient;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ui.FenLogin;
-import utilitaire.Controleur;
 
 /**
  *
@@ -85,15 +85,16 @@ public class AppCtr {
 
     public static void InitiationDataFolders() {
         //InitiationDataUtilisateur();
-        SimpleDateFormat ft =new SimpleDateFormat("yyyy-MM-dd");
+        //SimpleCalendarFormat ft =new SimpleCalendarFormat("yyyy-MM-dd");
+        Calendar ft = Calendar.getInstance();
         Set monSet = new TreeSet();
         //FoldersList folders = new FoldersList();
-        monSet.add(new Folder(20152,new Patient(20152,"Flouflou", "Bon", "Anjou","M", "BONF89050510", "","flouflou.B@hotmail.com", new Date(1989-05-05),new Adresse(50, "rue taillon","","H1H1N1", "Anjou","Québec", "Canada")),new Episode(){}));
-        monSet.add(new Folder(28526,new Patient(28526,"Jean", "Bon", "Verdun","M", "BONJ00050505", "","jean.B@hotmail.com", new Date(2000-01-16),new Adresse(15335, "Boul. Demarchais","","H4H1N1", "Verdun","Québec", "Canada")),new Episode(){}));
-        monSet.add(new Folder(209815,new Patient(209815,"Sarah", "Beaulieu", "Verdun","M", "BONF89050510", "","Sarah.B@hotmail.com", new Date(1968-11-25),new Adresse(666, "rue Allard","","H4H2C5", "Verdun","Québec", "Canada")),new Episode(){}));
-        monSet.add(new Folder(980506,new Patient(980506,"Luce", "Puce", "St-Hubert","M", "BONF89050510", "","lucep@hotmail.com", new Date(1990-07-29),new Adresse(88, "70e ave","","H1H1N1", "St-Hubert","Québec", "Canada")),new Episode(){}));
-        monSet.add(new Folder(12378,new Patient(12378,"Amande", "Noisette", "Boucherville","M", "BONF89050510", "","noisamnd.B@hotmail.com", new Date(1998-02-14),new Adresse(5, "80e ave","","H1H1N1", "Boucherville","Québec", "Canada")),new Episode(){}));
-        monSet.add(new Folder(012345,new Patient(012345,"Flou", "Bon", "Château-Guay","M", "BONF89050510", "","flou.B@hotmail.com", new Date(1991-03-03),new Adresse(956, "8e rang","","H1H1N1", "Château-Guay","Québec", "Canada")),new Episode(){}));
+        monSet.add(new Folder(20152,new Patient(20152,"Flouflou", "Bon", "Anjou","M", "BONF89050510", "","flouflou.B@hotmail.com",new Date(1989,05,05),new Adresse(50, "rue taillon","","H1H1N1", "Anjou","Québec", "Canada")),new Episode(){}));
+        monSet.add(new Folder(28526,new Patient(28526,"Jean", "Bon", "Verdun","M", "BONJ00050505", "","jean.B@hotmail.com", new Date(2000,01,16),new Adresse(15335, "Boul. Demarchais","","H4H1N1", "Verdun","Québec", "Canada")),new Episode(){}));
+        monSet.add(new Folder(209815,new Patient(209815,"Sarah", "Beaulieu", "Verdun","F", "BONF89050510", "","Sarah.B@hotmail.com", new Date(1968,11,25),new Adresse(666, "rue Allard","","H4H2C5", "Verdun","Québec", "Canada")),new Episode(){}));
+        monSet.add(new Folder(980506,new Patient(980506,"Luce", "Puce", "St-Hubert","F", "BONF89050510", "","lucep@hotmail.com", new Date(1990,07,29),new Adresse(88, "70e ave","","H1H1N1", "St-Hubert","Québec", "Canada")),new Episode(){}));
+        monSet.add(new Folder(12378,new Patient(12378,"Amande", "Noisette", "Boucherville","F", "BONF89050510", "","noisamnd.B@hotmail.com", new Date(1998,02,14),new Adresse(5, "80e ave","","H1H1N1", "Boucherville","Québec", "Canada")),new Episode(){}));
+        monSet.add(new Folder(012345,new Patient(012345,"Flou", "Bon", "Château-Guay","T", "BONF89050510", "","flou.B@hotmail.com", new Date(1991,03,03),new Adresse(956, "8e rang","","H1H1N1", "Château-Guay","Québec", "Canada")),new Episode(){}));
         
         ManipFichier.ecritureOblect("FoldersData.bin", monSet);
         ManipFichier.LectureObjet("FoldersData.bin", folds);
@@ -128,6 +129,13 @@ public class AppCtr {
         
         ManipFichier.ecritureOblect("UserData.bin", monSet);
         ManipFichier.LectureObjet("UserData.bin", utilisateurs);
+    }
+
+    static class PatientImpl extends Patient {
+
+        public PatientImpl(int i, String string, String string1, String string2, String string3, String string4, String string5, String string6, Date date, Adresse adrs) {
+            super(i, string, string1, string2, string3, string4, string5, string6, date, adrs);
+        }
     }
     
 }

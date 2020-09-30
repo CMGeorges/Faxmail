@@ -9,8 +9,10 @@ import Control.AppCtr;
 import Data.ManipFichier;
 import Exception.TrueUserException;
 import Modele.Agent;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 import utilitaire.Controleur;
 
 /**
@@ -18,13 +20,12 @@ import utilitaire.Controleur;
  * @author camsl
  */
 public class FenLogin extends javax.swing.JFrame {
-   Image im = Toolkit.getDefaultToolkit().getImage("/Images/medical_images.ico");
     /**
      * Creates new form FenLogin
      */
     public FenLogin() {
         initComponents();
-        this.setIconImage(im);
+        
     }
 
     /**

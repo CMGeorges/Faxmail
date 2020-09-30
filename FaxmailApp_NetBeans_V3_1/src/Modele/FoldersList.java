@@ -68,9 +68,9 @@ public class FoldersList extends ArrayList<Folder> implements Affichage{
 
     public Folder searchFolder(String elementAt) {
         Folder f = new Folder();
-        while(elementAt != null){
+        if(elementAt != null){
             for(Folder fo:folds){
-                if (elementAt == null ? String.valueOf(fo.getNumDossier()) == null : elementAt.equals(String.valueOf(fo.getNumDossier()))) {
+                if (elementAt.equals(String.valueOf(fo.getNumDossier()))) {
                     f=fo;
                 } 
             }

@@ -30,7 +30,10 @@ import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -326,5 +329,13 @@ public class ManipFichier{
         }
         
     }
+    public static Date StringToDate(String dob) throws ParseException {
+      //Instantiating the SimpleDateFormat class
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+      //Parsing the given String to Date object
+      Date date = formatter.parse(dob);
+      System.out.println("Date object value: "+date);
+      return date;
+   }
         
 }
