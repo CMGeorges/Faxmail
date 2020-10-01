@@ -31,7 +31,7 @@ public class Adresse implements Serializable{
 
     @Override
     public String toString(){
-        return numCivil+" "+appartement+", "+rue+" "+ville+", "+province +", "+ pays +" "+codePostal;
+        return numCivil+", "+appartement+", "+rue+", "+ville+", "+province +", "+ pays +", "+codePostal;
     }
     
 }

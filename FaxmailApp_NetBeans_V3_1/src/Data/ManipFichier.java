@@ -6,6 +6,7 @@
 package Data;
 
 import Exception.TrueUserException;
+import Modele.Adresse;
 import Modele.Enqueteur;
 import Modele.UserList;
 import Modele.Agent;
@@ -337,5 +338,25 @@ public class ManipFichier{
       System.out.println("Date object value: "+date);
       return date;
    }
+
+    public static Adresse parseAdresse(String text) {
+        final String[] tokens = text.split(",");
+        final Adresse A;
         
+        final int numCivil = Integer.parseInt(tokens[0]);
+        final String app =tokens[1];
+        final  String rue = tokens[2];
+        final String codeP = tokens[6];
+        final String ville= tokens[3];
+        final String province= tokens[4];
+        final String pays  = tokens[5];   
+       
+        A= new Adresse(numCivil, rue, app,codeP,ville,province,pays);
+    
+        return A;
+    }
+
+    public static String toStringDate(Date dateDeNaissance) {
+        return dateDeNaissance.getDate()+"-"+dateDeNaissance.getMonth()+"-"+dateDeNaissance.getYear();
+    }
 }

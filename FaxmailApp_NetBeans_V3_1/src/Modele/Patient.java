@@ -15,6 +15,10 @@ import java.util.Date;
 public class Patient  implements Serializable{
     private int numPatient;
     private String nom,prenom,region,sexe,ramq,autreNom,email;
+
+    public void setSexe(String sexe) {
+        this.sexe = sexe;
+    }
     private Date dateDeNaissance;
     private Adresse adresse;
 
@@ -29,6 +33,7 @@ public class Patient  implements Serializable{
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
+    
 
     public int getNumPatient() {
         return numPatient;
@@ -99,6 +104,13 @@ public class Patient  implements Serializable{
         this.dateDeNaissance = dateDeNaissance;
         this.adresse = adresse;
     }
+
+    @Override
+    public String toString() {
+        return numPatient +","+ nom+","+prenom+","+region+","+sexe+","+ramq+","+autreNom+","+email+","+dateDeNaissance+","+adresse; //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 
     

@@ -21,13 +21,13 @@ public class Declaration implements Serializable, Comparable<Declaration>{
 //Déclarant    
         private String declarant;
     //Patient
-        private String nomPatient,sexe,numAssMAl,dateDeNaissance,tel,status;
+        private String nomPatient,sexe,numAssMAl,tel,status;
     //Medecin
         private String nomDr,milieuDeConsultation,permis;
         private String adresseDuDemandeur;
 
     //Laboratoire
-        private Date dateDePre,dateExecution;
+        private Date dateDePre,dateExecution,dateDeNaissance;
         private String typeDePre,siteDePre,nomDemande,analyse,resultat;
     
 
@@ -78,11 +78,11 @@ public class Declaration implements Serializable, Comparable<Declaration>{
         this.numAssMAl = numAssMAl;
     }
 
-    public String getDateDeNaissance() {
+    public Date getDateDeNaissance() {
         return dateDeNaissance;
     }
 
-    public void setDateDeNaissance(String dateDeNaissance) {
+    public void setDateDeNaissance(Date dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
     }
 
@@ -198,7 +198,7 @@ public class Declaration implements Serializable, Comparable<Declaration>{
  * @param analyse
  * @param resultat 
  */
-    public Declaration(int noEven, String declarant, String nomPatient, String sexe, String numAssMAl, String dateDeNaissance, String tel, String status, String nomDr, String milieuDeConsultation, String adresseDuDemandeur, Date dateDePre, Date dateExecution, String typeDePre, String siteDePre, String nomDemande, String analyse, String resultat) {
+    public Declaration(int noEven, String declarant, String nomPatient, String sexe, String numAssMAl, Date dateDeNaissance, String tel, String status, String nomDr, String milieuDeConsultation, String adresseDuDemandeur, Date dateDePre, Date dateExecution, String typeDePre, String siteDePre, String nomDemande, String analyse, String resultat) {
         this.noEven = noEven;
         this.declarant = declarant;
         this.nomPatient = nomPatient;
@@ -237,6 +237,30 @@ public class Declaration implements Serializable, Comparable<Declaration>{
     public void setNoEven(int noEven) {
         this.noEven = noEven;
     }
+
+    @Override
+    public String toString() {
+        return  noEven+", "
+                +declarant+", "
+                +nomPatient+", "
+                +sexe+", "
+                +numAssMAl+", "
+                +dateDeNaissance+", "
+                +tel+", "
+                +status+", "
+                +nomDr+", "
+                +milieuDeConsultation+", "
+                +adresseDuDemandeur+", "
+                +dateDePre+", "
+                +dateExecution+", "
+                +typeDePre+", "
+                +siteDePre+", "
+                +nomDemande+", "
+                +analyse+", "
+                +resultat;
+    }
+
+
     
     
     

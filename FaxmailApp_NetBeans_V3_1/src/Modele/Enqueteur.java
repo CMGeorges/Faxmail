@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 public class Enqueteur extends Agent implements Serializable{
 
+    
+
     @Override
     public String toString() {
         return matricule+"================="+regions+"======="+getNomUtilisateur()+" "+getMotDePasse(); //To change body of generated methods, choose Tools | Templates.
@@ -40,6 +42,8 @@ public class Enqueteur extends Agent implements Serializable{
     public void setRegions(ArrayList<String> regions) {
         this.regions = regions;
     }
+    
+    
     
     public Enqueteur(int matricule, ArrayList<String> regions, String nomUtilisateur, String motDePasse) {
         super(nomUtilisateur, motDePasse);

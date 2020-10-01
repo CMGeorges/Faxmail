@@ -7,6 +7,7 @@ package ui;
 
 import static Control.AppCtr.folds;
 import Data.ManipFichier;
+import Modele.Adresse;
 import Modele.Agent;
 import Modele.Declaration;
 import Modele.Enqueteur;
@@ -33,7 +34,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PaneAcceuil extends javax.swing.JPanel {
       
-   Folder folderUse;
+   protected Folder folderUse;
+   protected boolean type=false;
     /**
      * Creates new form PaneAcceuil
      */
@@ -57,6 +59,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         TabNDossier.setEnabled(false);
         jLabel1.setEnabled(false);
         if (agt.getClass()!=Enqueteur.class) {
+            type=false;
             this.jlblAccount.setText("Bienvenue " + agt.getNomUtilisateur());
                         //System.out.println("Bienvenue " +agt.getNomUtilisateur()); 
          try {
@@ -81,6 +84,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
             }
         }else{
         Enqueteur e1=(Enqueteur)agt;
+        type = true;
         this.jlblAccount.setText("Bienvenue " + e1.getMatricule());
         //this.jListDossiers.setAutoscrolls(true);
             try {
@@ -258,6 +262,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
 
         jFDeclaration.setTitle("Déclaration");
         jFDeclaration.setMaximizedBounds(new java.awt.Rectangle(0, 0, 645, 700));
+        jFDeclaration.setMaximumSize(new java.awt.Dimension(700, 700));
         jFDeclaration.setMinimumSize(new java.awt.Dimension(645, 600));
         jFDeclaration.setResizable(false);
         jFDeclaration.setSize(new java.awt.Dimension(645, 650));
@@ -410,7 +415,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                                             .addGroup(jpDeclarationLayout.createSequentialGroup()
                                                 .addComponent(lblDeAdresse)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(txtDeAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(txtDeAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(jpDeclarationLayout.createSequentialGroup()
                                                 .addComponent(lblNAM)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -478,27 +483,22 @@ public class PaneAcceuil extends javax.swing.JPanel {
         jpDeclarationLayout.setVerticalGroup(
             jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpDeclarationLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(15, 15, 15)
                 .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDeclarant)
                     .addComponent(txtDeclarant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpDeclarationLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDeAdresse)
-                            .addComponent(txtDeAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jpDeclarationLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtNomPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblDateDeNaissance)
-                            .addComponent(txtDateDeNaissance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblNAM)
-                            .addComponent(txtNumASsM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtNomPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDeAdresse)
+                    .addComponent(txtDeAdresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDateDeNaissance)
+                    .addComponent(txtDateDeNaissance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNAM)
+                    .addComponent(txtNumASsM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDeTel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -543,11 +543,12 @@ public class PaneAcceuil extends javax.swing.JPanel {
                         .addComponent(txtAnalyse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblAnalyse, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblResultat)
+                .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNomDemande, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtResultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNomDemande))
+                    .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblResultat)
+                        .addComponent(txtResultat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNomDemande)))
                 .addGap(36, 36, 36)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -560,7 +561,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                         .addGroup(jpDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSaveDec)
                             .addComponent(btnCancelDec))))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jpDeclaration);
@@ -569,13 +570,14 @@ public class PaneAcceuil extends javax.swing.JPanel {
         jFDeclaration.getContentPane().setLayout(jFDeclarationLayout);
         jFDeclarationLayout.setHorizontalGroup(
             jFDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jFDeclarationLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFDeclarationLayout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         jFDeclarationLayout.setVerticalGroup(
             jFDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
         );
 
         jInternalFrame1.setVisible(true);
@@ -595,6 +597,11 @@ public class PaneAcceuil extends javax.swing.JPanel {
 
         btnEnregistrer.setText("Enregistrer");
         btnEnregistrer.setMaximumSize(new java.awt.Dimension(103, 32));
+        btnEnregistrer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnregistrerActionPerformed(evt);
+            }
+        });
 
         btnFermer.setText("Fermer");
         btnFermer.setMaximumSize(new java.awt.Dimension(103, 32));
@@ -906,13 +913,24 @@ public class PaneAcceuil extends javax.swing.JPanel {
      * @return PaneDossier(Dossier)
      */
     private void btnConsulterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsulterActionPerformed
-//        // TODO add your handling code here://Lorsque presser l'app bug.
-        System.out.println(Arrays.toString(jListDossiers.getSelectionModel().getSelectedIndices()));
-       
+        //Lorsque presser l'app bug.
+        //Solution trouvé dans la Méthode FoldersList.searchFolder ligne de code contradictoire 2020-09-23
+        System.out.println(Arrays.toString(jListDossiers.getSelectionModel().getSelectedIndices()));       
         System.out.println(jListDossiers.getModel().getElementAt(jListDossiers.getSelectionModel().getMaxSelectionIndex()));
         //Folder f=folds.searchFolder(jListDossiers.getModel().getElementAt(jListDossiers.getSelectionModel().getMaxSelectionIndex()));    
         //clean();
         consulteur.execute();
+        
+        if (type) {
+            txtDPrenom.setEnabled(false);
+            txtDNom.setEnabled(false);
+            txtDMiddleName.setEnabled(false);
+            txtDDAteDeNaissance.setEnabled(false);
+            jComboSexe.setEnabled(false);
+            txtDREgion.setEnabled(false);
+            txtDAdresse.setEnabled(false);
+            txtDCourriel.setEnabled(false);            
+        }
 
 //            System.out.println(consulteur.get());
                 //setData(f);
@@ -940,7 +958,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         Declaration NouvelleDeclaration = new Declaration();
         NouvelleDeclaration.setDeclarant(txtDeclarant.getText());
         NouvelleDeclaration.setNomPatient(txtNomPatient.getText());
-        NouvelleDeclaration.setDateDeNaissance(txtDateDeNaissance.getText());
+        NouvelleDeclaration.setDateDeNaissance(ManipFichier.StringToDate(txtDateDeNaissance.getText()));
         NouvelleDeclaration.setTel(txtDeTel.getText());
         NouvelleDeclaration.setNumAssMAl(txtNumASsM.getText());
         NouvelleDeclaration.setNomDr(txtDrDemandeur.getText());
@@ -949,6 +967,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         NouvelleDeclaration.setMilieuDeConsultation(txtMilieuConsult.getText());
         NouvelleDeclaration.setAdresseDuDemandeur(txtAdresseDr.getText());
         NouvelleDeclaration.setSiteDePre(txtSitePre.getText());
+        NouvelleDeclaration.setStatus(jCBStatus.getModel().getSelectedItem().toString());
 //       DateFormat f = DateFormat.getDateInstance();
 //        f.setLenient(false);
 ////        Date d = );
@@ -958,14 +977,12 @@ public class PaneAcceuil extends javax.swing.JPanel {
         NouvelleDeclaration.setAnalyse(txtAnalyse.getText());
         NouvelleDeclaration.setResultat(txtResultat.getText());
         NouvelleDeclaration.setNomDemande(jCBStatus.toString());
-        System.out.println("Nouvel: "+NouvelleDeclaration);
+        System.out.println("Nouvel: "+NouvelleDeclaration.toString());
         return NouvelleDeclaration;
     }
 
     private void btnAddDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDecActionPerformed
        jFDeclaration.setVisible(true); 
-        
-        
     }//GEN-LAST:event_btnAddDecActionPerformed
 
     /**
@@ -1000,6 +1017,38 @@ public class PaneAcceuil extends javax.swing.JPanel {
     private void txtNomPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomPatientActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomPatientActionPerformed
+
+    private void btnEnregistrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnregistrerActionPerformed
+        
+        try {
+            
+            if (type) {//Vérification du type d'utilisateur
+                //Mise à jour du dossier dans le cas d'un Enqueteur.
+                for (Folder f : folds) {
+                    if (f.getNumDossier() == folderUse.getNumDossier()) {
+                        f = folderUse;
+                    }
+                }
+            }
+            else{
+               
+                //Seule les deux attributs suivant peuvent être changés par un Agent
+                folderUse.getPatient().setAdresse(ManipFichier.parseAdresse(txtDAdresse.getText()));          
+                folderUse.getPatient().setSexe(jComboSexe.getModel().getSelectedItem().toString()) ;              
+                //Mise a jour du dossier
+                for (Folder f : folds) {
+                    if (f.getNumDossier() == folderUse.getNumDossier()) {
+                        f = folderUse;
+                    }
+                
+                }
+                //System.out.println("Test folder use :"+  folderUse.getPatient().toString());                
+                ManipFichier.ecritureOblect("FoldersData.bin", folds);
+            }
+        } catch (Exception e) {
+             Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_btnEnregistrerActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1145,7 +1194,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         txtDPrenom.setText(f.getPatient().getPrenom());
         txtDNom.setText(f.getPatient().getNom());
         txtDMiddleName.setText(f.getPatient().getAutreNom());
-        txtDDAteDeNaissance.setText(f.getPatient().getDateDeNaissance().getDate()+"/"+f.getPatient().getDateDeNaissance().getMonth()+"/"+f.getPatient().getDateDeNaissance().getYear());//probleme d''affichage de la date en format DD-MM-YYYY//regler 02:23AM 2020-09-29
+        txtDDAteDeNaissance.setText(ManipFichier.toStringDate(f.getPatient().getDateDeNaissance()));//probleme d''affichage de la date en format DD-MM-YYYY//regler 02:23AM 2020-09-29
         jComboSexe.setSelectedItem(f.getPatient().getSexe());
         txtDREgion.setText(f.getPatient().getRegion());
         txtDAdresse.setText(f.getPatient().getAdresse().toString());
@@ -1160,7 +1209,8 @@ public class PaneAcceuil extends javax.swing.JPanel {
         model.setRowCount(0);                
         for (Declaration dec : episodes) { 
             model.addRow(new Object[]{dec.getNoEven(),
-                dec.getResultat(),dec.getDateDePre(),dec.getStatus(),dec.getDateExecution()});
+                dec.getResultat(),ManipFichier.toStringDate(dec.getDateDePre()),dec.getStatus(),ManipFichier.toStringDate(dec.getDateExecution())});
         }
     }
+
 }
