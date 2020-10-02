@@ -131,11 +131,6 @@ public class AppCtr {
         ManipFichier.LectureObjet("UserData.bin", utilisateurs);
     }
 
-    static class PatientImpl extends Patient {
-
-        public PatientImpl(int i, String string, String string1, String string2, String string3, String string4, String string5, String string6, Date date, Adresse adrs) {
-            super(i, string, string1, string2, string3, string4, string5, string6, date, adrs);
-        }
-    }
+    
     
 }

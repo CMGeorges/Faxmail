@@ -13,6 +13,7 @@ import Modele.Declaration;
 import Modele.Enqueteur;
 import Modele.Episode;
 import Modele.Folder;
+import java.awt.Frame;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -124,7 +125,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         jScrollError = new javax.swing.JScrollPane();
         txtAeraError = new javax.swing.JTextArea();
         jFDeclaration = new javax.swing.JFrame();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jSCDeclaration = new javax.swing.JScrollPane();
         jpDeclaration = new javax.swing.JPanel();
         lblDeclarant = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -262,20 +263,22 @@ public class PaneAcceuil extends javax.swing.JPanel {
 
         jFDeclaration.setTitle("Déclaration");
         jFDeclaration.setMaximizedBounds(new java.awt.Rectangle(0, 0, 645, 700));
-        jFDeclaration.setMaximumSize(new java.awt.Dimension(700, 700));
+        jFDeclaration.setMaximumSize(new java.awt.Dimension(755, 720));
         jFDeclaration.setMinimumSize(new java.awt.Dimension(645, 600));
         jFDeclaration.setResizable(false);
         jFDeclaration.setSize(new java.awt.Dimension(645, 650));
 
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane1.setAutoscrolls(true);
-        jScrollPane1.setMaximumSize(new java.awt.Dimension(800, 800));
-        jScrollPane1.setNextFocusableComponent(jpDeclaration);
-        jScrollPane1.setViewportView(jpDeclaration);
+        jSCDeclaration.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jSCDeclaration.setAutoscrolls(true);
+        jSCDeclaration.setMaximumSize(new java.awt.Dimension(800, 800));
+        jSCDeclaration.setMinimumSize(new java.awt.Dimension(650, 650));
+        jSCDeclaration.setNextFocusableComponent(jpDeclaration);
+        jSCDeclaration.setPreferredSize(new java.awt.Dimension(645, 680));
+        jSCDeclaration.setViewportView(jpDeclaration);
 
         jpDeclaration.setAutoscrolls(true);
-        jpDeclaration.setMaximumSize(new java.awt.Dimension(645, 645));
-        jpDeclaration.setMinimumSize(new java.awt.Dimension(645, 650));
+        jpDeclaration.setMaximumSize(new java.awt.Dimension(645, 700));
+        jpDeclaration.setMinimumSize(new java.awt.Dimension(645, 680));
         jpDeclaration.setPreferredSize(new java.awt.Dimension(645, 650));
 
         lblDeclarant.setLabelFor(txtDeclarant);
@@ -564,7 +567,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 .addContainerGap(75, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setViewportView(jpDeclaration);
+        jSCDeclaration.setViewportView(jpDeclaration);
 
         javax.swing.GroupLayout jFDeclarationLayout = new javax.swing.GroupLayout(jFDeclaration.getContentPane());
         jFDeclaration.getContentPane().setLayout(jFDeclarationLayout);
@@ -572,12 +575,12 @@ public class PaneAcceuil extends javax.swing.JPanel {
             jFDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jFDeclarationLayout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jSCDeclaration, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31))
         );
         jFDeclarationLayout.setVerticalGroup(
             jFDeclarationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(jSCDeclaration, javax.swing.GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
         );
 
         jInternalFrame1.setVisible(true);
@@ -738,6 +741,11 @@ public class PaneAcceuil extends javax.swing.JPanel {
         });
 
         btnConsult.setText("Consulter");
+        btnConsult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpDossierLayout = new javax.swing.GroupLayout(jpDossier);
         jpDossier.setLayout(jpDossierLayout);
@@ -865,9 +873,9 @@ public class PaneAcceuil extends javax.swing.JPanel {
                             .addComponent(jSPList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnConsulter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPAcceuil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jScrollPAcceuil, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
-                        .addComponent(jlblAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlblAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
                         .addGap(18, 18, 18))))
         );
         jInternalFrame1Layout.setVerticalGroup(
@@ -889,7 +897,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                         .addComponent(btnFermer, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDeconnecter, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(33, Short.MAX_VALUE))
+                        .addContainerGap(16, Short.MAX_VALUE))
                     .addComponent(jScrollPAcceuil, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
         );
 
@@ -938,51 +946,23 @@ public class PaneAcceuil extends javax.swing.JPanel {
     }//GEN-LAST:event_btnConsulterActionPerformed
 
     private void btnDeconnecterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeconnecterActionPerformed
-//        try {
-//            Controleur.restert();
-//        } catch (IOException ex) {
-//            Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+          
+           this.getParent().getParent().getParent().setVisible(false);
+            new FenLogin().setVisible(true);
+
     }//GEN-LAST:event_btnDeconnecterActionPerformed
 
     private void DialogErreurPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_DialogErreurPropertyChange
         // TODO add your handling code here:
 
     }//GEN-LAST:event_DialogErreurPropertyChange
-/**
- * 
- * @return Declaration
- * @throws ParseException 
- */
-    protected Declaration getNewEpisode() throws ParseException {
-        Declaration NouvelleDeclaration = new Declaration();
-        NouvelleDeclaration.setDeclarant(txtDeclarant.getText());
-        NouvelleDeclaration.setNomPatient(txtNomPatient.getText());
-        NouvelleDeclaration.setDateDeNaissance(ManipFichier.StringToDate(txtDateDeNaissance.getText()));
-        NouvelleDeclaration.setTel(txtDeTel.getText());
-        NouvelleDeclaration.setNumAssMAl(txtNumASsM.getText());
-        NouvelleDeclaration.setNomDr(txtDrDemandeur.getText());
-        NouvelleDeclaration.setNomDemande(txtNomDemande.getText());
-        NouvelleDeclaration.setPermis(txtPermis.getText());
-        NouvelleDeclaration.setMilieuDeConsultation(txtMilieuConsult.getText());
-        NouvelleDeclaration.setAdresseDuDemandeur(txtAdresseDr.getText());
-        NouvelleDeclaration.setSiteDePre(txtSitePre.getText());
-        NouvelleDeclaration.setStatus(jCBStatus.getModel().getSelectedItem().toString());
-//       DateFormat f = DateFormat.getDateInstance();
-//        f.setLenient(false);
-////        Date d = );
-        NouvelleDeclaration.setDateDePre(ManipFichier.StringToDate(txtDatePrelevement.getText()));
-        NouvelleDeclaration.setDateExecution(ManipFichier.StringToDate(txtDateExecu.getText()));
-        NouvelleDeclaration.setTypeDePre(txtTypePre.getText());
-        NouvelleDeclaration.setAnalyse(txtAnalyse.getText());
-        NouvelleDeclaration.setResultat(txtResultat.getText());
-        NouvelleDeclaration.setNomDemande(jCBStatus.toString());
-        System.out.println("Nouvel: "+NouvelleDeclaration.toString());
-        return NouvelleDeclaration;
-    }
+
 
     private void btnAddDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDecActionPerformed
-       jFDeclaration.setVisible(true); 
+       jFDeclaration.setSize(755, 720);
+       jFDeclaration.setExtendedState(Frame.MAXIMIZED_BOTH);
+       jFDeclaration.setLocationRelativeTo(this);
+        jFDeclaration.setVisible(true); 
     }//GEN-LAST:event_btnAddDecActionPerformed
 
     /**
@@ -1022,33 +1002,29 @@ public class PaneAcceuil extends javax.swing.JPanel {
         
         try {
             
-            if (type) {//Vérification du type d'utilisateur
+            if (type) { //Vérification du type d'utilisateur
                 //Mise à jour du dossier dans le cas d'un Enqueteur.
-                for (Folder f : folds) {
-                    if (f.getNumDossier() == folderUse.getNumDossier()) {
-                        f = folderUse;
-                    }
-                }
+                updateFolder();
             }
             else{
                
                 //Seule les deux attributs suivant peuvent être changés par un Agent
                 folderUse.getPatient().setAdresse(ManipFichier.parseAdresse(txtDAdresse.getText()));          
                 folderUse.getPatient().setSexe(jComboSexe.getModel().getSelectedItem().toString()) ;              
-                //Mise a jour du dossier
-                for (Folder f : folds) {
-                    if (f.getNumDossier() == folderUse.getNumDossier()) {
-                        f = folderUse;
-                    }
-                
-                }
+                updateFolder();
                 //System.out.println("Test folder use :"+  folderUse.getPatient().toString());                
-                ManipFichier.ecritureOblect("FoldersData.bin", folds);
+                
             }
         } catch (Exception e) {
              Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_btnEnregistrerActionPerformed
+
+    private void btnConsultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultActionPerformed
+        //tabPrevious.getSelectionModel()
+        tabPrevious.getSelectionModel().getMaxSelectionIndex();
+    }//GEN-LAST:event_btnConsultActionPerformed
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1073,11 +1049,11 @@ public class PaneAcceuil extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jListDossiers;
+    private javax.swing.JScrollPane jSCDeclaration;
     private javax.swing.JScrollPane jSPList;
     private javax.swing.JScrollPane jScrollError;
     private javax.swing.JScrollPane jScrollPAcceuil;
     private javax.swing.JScrollPane jScrollPNDossier;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -1166,9 +1142,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 fold = get();
                 System.out.println("setData");
                 setData(fold);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ExecutionException ex) {
+            } catch (InterruptedException | ExecutionException ex) {
                 Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -1190,7 +1164,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
     }
     private void setData(Folder f) {
         
-        System.out.println((f.getPatient().getDateDeNaissance().toString()));
+        //System.out.println((f.getPatient().getDateDeNaissance().toString()));
         txtDPrenom.setText(f.getPatient().getPrenom());
         txtDNom.setText(f.getPatient().getNom());
         txtDMiddleName.setText(f.getPatient().getAutreNom());
@@ -1211,6 +1185,51 @@ public class PaneAcceuil extends javax.swing.JPanel {
             model.addRow(new Object[]{dec.getNoEven(),
                 dec.getResultat(),ManipFichier.toStringDate(dec.getDateDePre()),dec.getStatus(),ManipFichier.toStringDate(dec.getDateExecution())});
         }
+    }
+    /**
+     * 
+     */
+    public void updateFolder() {
+        //Mise a jour du dossier
+        for (Folder f : folds) {
+            if (f.getNumDossier() == folderUse.getNumDossier()) {
+                f = folderUse;
+            }
+            
+        }
+        ManipFichier.ecritureOblect("FoldersData.bin", folds);
+        System.out.println("Modification du Fichier enregistré.");
+    }
+    /**
+ * 
+ * @return Declaration
+ * @throws ParseException 
+ */
+    protected Declaration getNewEpisode() throws ParseException {
+        Declaration NouvelleDeclaration = new Declaration();
+        NouvelleDeclaration.setDeclarant(txtDeclarant.getText());
+        NouvelleDeclaration.setNomPatient(txtNomPatient.getText());
+        NouvelleDeclaration.setDateDeNaissance(ManipFichier.StringToDate(txtDateDeNaissance.getText()));
+        NouvelleDeclaration.setTel(txtDeTel.getText());
+        NouvelleDeclaration.setNumAssMAl(txtNumASsM.getText());
+        NouvelleDeclaration.setNomDr(txtDrDemandeur.getText());
+        NouvelleDeclaration.setNomDemande(txtNomDemande.getText());
+        NouvelleDeclaration.setPermis(txtPermis.getText());
+        NouvelleDeclaration.setMilieuDeConsultation(txtMilieuConsult.getText());
+        NouvelleDeclaration.setAdresseDuDemandeur(txtAdresseDr.getText());
+        NouvelleDeclaration.setSiteDePre(txtSitePre.getText());
+        NouvelleDeclaration.setStatus(jCBStatus.getModel().getSelectedItem().toString());
+//       DateFormat f = DateFormat.getDateInstance();
+//        f.setLenient(false);
+////        Date d = );
+        NouvelleDeclaration.setDateDePre(ManipFichier.StringToDate(txtDatePrelevement.getText()));
+        NouvelleDeclaration.setDateExecution(ManipFichier.StringToDate(txtDateExecu.getText()));
+        NouvelleDeclaration.setTypeDePre(txtTypePre.getText());
+        NouvelleDeclaration.setAnalyse(txtAnalyse.getText());
+        NouvelleDeclaration.setResultat(txtResultat.getText());
+        NouvelleDeclaration.setNomDemande(jCBStatus.toString());
+        System.out.println("Nouvel: "+NouvelleDeclaration.toString());
+        return NouvelleDeclaration;
     }
 
 }
