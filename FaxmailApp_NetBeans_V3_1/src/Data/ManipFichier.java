@@ -10,6 +10,7 @@ import Modele.Adresse;
 import Modele.Enqueteur;
 import Modele.UserList;
 import Modele.Agent;
+import Modele.Declaration;
 import Modele.Episode;
 import Modele.Folder;
 import Modele.FoldersList;
@@ -35,6 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -359,4 +361,201 @@ public class ManipFichier{
     public static String toStringDate(Date dateDeNaissance) {
         return dateDeNaissance.getDate()+"-"+dateDeNaissance.getMonth()+"-"+dateDeNaissance.getYear();
     }
+
+    /**
+     * 
+     * @param f
+     * @param folds 
+     */
+    public static void lectureDeclaration(File f, FoldersList folds) {
+        String suffix = ".txt";
+        if (f.getPath().endsWith(suffix)) {
+           //Pour Txt
+        lectureDeclarationTxt(f, folds);  
+        }else      
+        //Pour Bin
+        lectureDeclarationBin(f, folds);
+        
+    }
+
+    /**
+     * 
+     * @param f
+     * @param folds 
+     */
+    public static void lectureDeclarationBin(File f, FoldersList folds) {
+        
+        long size = 0;
+        BufferedInputStream bi = null;
+        InputStream input =null;     
+        ObjectInputStream objInpoutStream=null;
+        Declaration declaration;
+        try {
+            
+            input =new FileInputStream(f);
+            bi = new BufferedInputStream(input);             
+            objInpoutStream = new ObjectInputStream(bi);
+            try {
+                //size = objInpoutStream.readUnsignedByte();
+                //for (int i = 0; i < size; i++) {
+                    declaration = (Declaration)objInpoutStream.readObject();
+                   // System.out.println("La déclaration: "+declaration);
+                   
+                    //gestion de la nouvelle déclaration
+                    folds.receptionDeDeclaration(declaration);
+                    folds.display();
+               // }
+                
+            } catch (IOException | ClassNotFoundException e) {
+                Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, e);
+            }    
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try { 
+                if (objInpoutStream!=null) {
+                    objInpoutStream.close();   
+                }
+                if (bi != null)
+                    bi.close();
+            }catch (IOException ex) {
+                Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param f
+     * @param folds 
+     */
+    public static void lectureDeclarationTxt(File f, FoldersList folds) {
+        
+        FileReader fr = null;
+        BufferedReader br=null;
+        try {
+            
+            fr = new FileReader(f);
+            br = new BufferedReader(fr);
+            //la lecture
+            String ligne;
+            while ((ligne = br.readLine()) != null) {
+                //System.out.println(ligne);
+                //ArrayList<String> lignes = new ArrayList<String>();
+                //lignes.add(ligne);
+                
+                try {
+                    Declaration declaration = parseLigneDeclaration(ligne);
+                    if (declaration != null) {
+                        //gestion de la nouvelle déclaration
+                        folds.receptionDeDeclaration(declaration);
+                        //System.out.println("Test"+U);
+                    }
+                } catch (NullPointerException | ParseException e) {
+                    //System.out.println(e.getMessage());
+                    Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, e);
+        }catch(IOException ex){
+            Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                if (fr!=null) {
+                    fr.close();
+                }
+                if (br!=null) {
+                    br.close();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    /**
+     * A terminer...
+     * @param ligne
+     * @return
+     * @throws ParseException 
+     */
+    private static Declaration parseLigneDeclaration(String ligne) throws ParseException {
+        Declaration declaration = new Declaration();
+        //String[] tokens = lignes.split(";");
+        Scanner s = new Scanner(ligne);
+        s.skip("\\p{:}");
+        String declarant=s.next();
+        //String[] tokensP = lignes[0].spli;
+        
+//        
+//        String nomPatient = tokens[1];
+//        String sexe = tokens[2];
+//        Date dateNaissance = StringToDate(tokens[3]);
+//        Adresse adress = parseAdresse(tokens[4]);
+//        String numAss = tokens[5];
+//        String telephone = tokens[6];
+//        String nomMedecin = tokens[7];
+//        String numPermis = tokens[8];
+//        String milieu = tokens[9];
+//        String adressM = tokens[10];
+//        Date datePre = StringToDate(tokens[11]);
+//        String typePre = tokens[12];
+//        String SitePre = tokens[13];
+//        Date dateExec = StringToDate(tokens[14]);
+//        String nomDemande = tokens[15];
+//        String analyse = tokens[16];
+//        String resultat = tokens[17];
+        
+        
+        
+        
+        return declaration;
+    }
+    
+    
+    /**
+     * L'impression de déclaration sous forme binaire.
+     * @param declaration
+     * @param countD 
+     */
+    public static void ecrireDeclaration(Declaration declaration,int countD ){  
+        int count=0;
+        File file =null;
+        FileOutputStream fos =null;
+        BufferedOutputStream bos = null;
+        ObjectOutputStream objectOutputStream=null;   
+        try {
+            String dile = declaration.getNomPatient()+String.valueOf(countD)+".bin";
+          file = new File(dile); 
+          fos = new FileOutputStream(file);
+          bos = new BufferedOutputStream(fos);
+          objectOutputStream = new ObjectOutputStream(bos);
+          objectOutputStream.writeObject(declaration);
+              
+        } catch (IOException e) {
+            Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, e);
+
+        }finally{
+            try {
+                if (objectOutputStream!=null) {
+                    objectOutputStream.close();
+                }
+                if (bos !=null) {
+                    bos.close();
+            System.out.println("Ecriture du fichier binaire reussie."+declaration.getNomPatient());
+                }
+                
+            } catch (IOException e) {
+                  Logger.getLogger(ManipFichier.class.getName()).log(Level.SEVERE, null, e);
+
+            }
+            
+        }
+    }
+
+    
 }

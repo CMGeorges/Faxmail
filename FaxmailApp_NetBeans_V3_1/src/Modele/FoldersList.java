@@ -77,6 +77,41 @@ public class FoldersList extends ArrayList<Folder> implements Affichage{
         }
        return f;
     }
+
+    /**
+     * Problème l'ajout ne ce fait pas.//Problème régler 2020-10-10
+     * @param declaration 
+     */
+    public void receptionDeDeclaration(Declaration declaration) {
+       //Recherhe de l'existance d'un dossier au nom de la Déclaration.
+       boolean exist=false;
+       for(Folder f:this){
+           if (f.getPatient().getRamq() == null ? declaration.getNumAssMAl() == null : f.getPatient().getRamq().equals(declaration.getNumAssMAl())) {
+               f.getEpisodes().addDeclaration(declaration);
+               System.out.println("Voici la nouvel déclaration: "+f.getEpisodes().toString());
+               this.display();
+               exist=true;
+           }
+       
+       }
+        if (exist!=true) {
+            String id = declaration.getNumAssMAl().substring(4);
+            String[] tokens = declaration.getNomPatient().split(",");
+            Folder newFolder = new Folder(Integer.parseInt(id),new Patient(Integer.parseInt(id),tokens[0], tokens[1], declaration.getAdresse().getVille(), declaration.getSexe(), declaration.getNumAssMAl(), null,null, declaration.getDateDeNaissance(), declaration.getAdresse()));
+            this.addFolder(newFolder);
+            System.out.println("Nouveau dossier créer!! \n"+newFolder);
+            this.display();
+        }
+       
+       
+
+        // Rajouter Declaration dans son dossier
+        
+        //Sinon Creer nouveau Dossier avec nouvelle declaration a l'intérieur.
+    }
+
+    
+    
     
     
 }

@@ -7,6 +7,7 @@ package ui;
 
 import static Control.AppCtr.folds;
 import Data.ManipFichier;
+import Exception.AdminException;
 import Modele.Adresse;
 import Modele.Agent;
 import Modele.Declaration;
@@ -14,6 +15,7 @@ import Modele.Enqueteur;
 import Modele.Episode;
 import Modele.Folder;
 import java.awt.Frame;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -22,9 +24,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -34,13 +39,39 @@ import javax.swing.table.DefaultTableModel;
  * @author camsl
  */
 public class PaneAcceuil extends javax.swing.JPanel {
-      
+   
+   protected Agent userUse;
    protected Folder folderUse;
    protected boolean type=false;
     /**
      * Creates new form PaneAcceuil
      */
     public PaneAcceuil() {
+        this.consulteur = new SwingWorker<Folder, Folder>(){
+            @Override
+            protected Folder doInBackground() throws Exception {
+                folderUse=folds.searchFolder(jListDossiers.getModel().getElementAt(jListDossiers.getSelectionModel().getMaxSelectionIndex()));
+                
+                return folderUse;
+            }
+            
+            @Override
+            protected void done() {
+                //get resultat de doInBackground()
+                Folder fold;
+                try {
+                    System.out.println("get doInBackground");
+                    fold = get();
+                    System.out.println("setData");
+                    setData(fold);
+                } catch (InterruptedException | ExecutionException ex) {
+                    Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+            
+        };
         initComponents();
     }
     
@@ -54,6 +85,33 @@ public class PaneAcceuil extends javax.swing.JPanel {
      * @param agt 
      */
     public PaneAcceuil(Agent agt) {
+        this.consulteur = new SwingWorker<Folder, Folder>(){
+            @Override
+            protected Folder doInBackground() throws Exception {
+                folderUse=folds.searchFolder(jListDossiers.getModel().getElementAt(jListDossiers.getSelectionModel().getMaxSelectionIndex()));
+                
+                return folderUse;
+            }
+            
+            @Override
+            protected void done() {
+                //get resultat de doInBackground()
+                Folder fold;
+                try {
+                    System.out.println("get doInBackground");
+                    fold = get();
+                    System.out.println("setData");
+                    clean();
+                    setData(fold);
+                } catch (InterruptedException | ExecutionException ex) {
+                    Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+            
+            
+        };
         initComponents();
         this.jTabPAcceuil.setEnabledAt(0,false);
         this.jpNouveaute.setEnabled(false);
@@ -61,6 +119,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         jLabel1.setEnabled(false);
         if (agt.getClass()!=Enqueteur.class) {
             type=false;
+            userUse=agt;
             this.jlblAccount.setText("Bienvenue " + agt.getNomUtilisateur());
                         //System.out.println("Bienvenue " +agt.getNomUtilisateur()); 
          try {
@@ -69,14 +128,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 jListDossiers.removeAll();
                 jListDossiers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 jListDossiers.setAlignmentY(TOP_ALIGNMENT);
-                DefaultListModel<String> model = new DefaultListModel<>();             
-                
-                for(Folder fo: folds){
-                    model.addElement(String.valueOf( fo.getNumDossier()));
-                    System.out.println("chaque dossiers" + fo.getNumDossier());
-                }
-                System.out.println("Voici les dossiers :\n" + model);
-                jListDossiers.setModel(model); 
+                UpdateDatas(); 
             } catch (NullPointerException e) {
                 //System.out.println(e.getMessage());               
             txtAeraError.setText(e.getMessage());
@@ -86,6 +138,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         }else{
         Enqueteur e1=(Enqueteur)agt;
         type = true;
+        userUse=e1;
         this.jlblAccount.setText("Bienvenue " + e1.getMatricule());
         //this.jListDossiers.setAutoscrolls(true);
             try {
@@ -93,13 +146,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 jListDossiers.removeAll();
                 jListDossiers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 jListDossiers.setAlignmentY(TOP_ALIGNMENT);
-                DefaultListModel<String> model = new DefaultListModel<>();           
-            for (Folder fo : folds.findFolders(e1)) {
-                model.addElement(String.valueOf( fo.getNumDossier()));
-            }
-                System.out.println("Voici vaux dossiers "+ e1.getMatricule()+":\n" + model);
-                jListDossiers.setModel(model); 
-               // this.jListDossiers.setListData((String[]) folds.findFolders(e1).toArray()); 
+                UpdateDatasEn(e1);
             } catch (NullPointerException e) {
                 //System.out.println(e.getMessage());               
             txtAeraError.setText(e.getMessage());
@@ -109,6 +156,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
                    
         }
     }
+
     
 
     /**
@@ -174,6 +222,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         lblStatus = new javax.swing.JLabel();
         lblFormatDate = new javax.swing.JLabel();
         lblFormatDate1 = new javax.swing.JLabel();
+        ChooserDeclaration = new javax.swing.JFileChooser();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jSPList = new javax.swing.JScrollPane();
         jListDossiers = new javax.swing.JList<>();
@@ -212,6 +261,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         txtDREgion = new javax.swing.JTextField();
         btnAddDec = new javax.swing.JButton();
         btnConsult = new javax.swing.JButton();
+        btnTelecharger = new javax.swing.JButton();
         btnModifier = new javax.swing.JButton();
         btnConsulter = new javax.swing.JButton();
 
@@ -263,7 +313,6 @@ public class PaneAcceuil extends javax.swing.JPanel {
 
         jFDeclaration.setTitle("Déclaration");
         jFDeclaration.setMaximizedBounds(new java.awt.Rectangle(0, 0, 645, 700));
-        jFDeclaration.setMaximumSize(new java.awt.Dimension(755, 720));
         jFDeclaration.setMinimumSize(new java.awt.Dimension(645, 600));
         jFDeclaration.setResizable(false);
         jFDeclaration.setSize(new java.awt.Dimension(645, 650));
@@ -583,6 +632,12 @@ public class PaneAcceuil extends javax.swing.JPanel {
             .addComponent(jSCDeclaration, javax.swing.GroupLayout.PREFERRED_SIZE, 600, Short.MAX_VALUE)
         );
 
+        ChooserDeclaration.setDialogTitle("Choisir votre Déclaration.txt que vous voulé enregistrer...");
+        ChooserDeclaration.setToolTipText("fichier .txt ou .bin");
+        ChooserDeclaration.setEnabled(false);
+        ChooserDeclaration.setFocusCycleRoot(true);
+        ChooserDeclaration.setName(""); // NOI18N
+
         jInternalFrame1.setVisible(true);
 
         jSPList.setMaximumSize(new java.awt.Dimension(710, 370));
@@ -610,6 +665,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         btnFermer.setMaximumSize(new java.awt.Dimension(103, 32));
 
         jlblAccount.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        jlblAccount.setForeground(new java.awt.Color(102, 0, 153));
         jlblAccount.setText("Account Settings --username@mailserver");
         jlblAccount.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
@@ -747,6 +803,13 @@ public class PaneAcceuil extends javax.swing.JPanel {
             }
         });
 
+        btnTelecharger.setText("Télécharger");
+        btnTelecharger.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTelechargerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpDossierLayout = new javax.swing.GroupLayout(jpDossier);
         jpDossier.setLayout(jpDossierLayout);
         jpDossierLayout.setHorizontalGroup(
@@ -795,6 +858,8 @@ public class PaneAcceuil extends javax.swing.JPanel {
                     .addGroup(jpDossierLayout.createSequentialGroup()
                         .addGroup(jpDossierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jpDossierLayout.createSequentialGroup()
+                                .addComponent(btnTelecharger)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnConsult)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAddDec))
@@ -838,7 +903,8 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpDossierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddDec)
-                    .addComponent(btnConsult))
+                    .addComponent(btnConsult)
+                    .addComponent(btnTelecharger))
                 .addContainerGap(514, Short.MAX_VALUE))
         );
 
@@ -848,6 +914,11 @@ public class PaneAcceuil extends javax.swing.JPanel {
 
         btnModifier.setText("Modifier");
         btnModifier.setMaximumSize(new java.awt.Dimension(103, 32));
+        btnModifier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifierActionPerformed(evt);
+            }
+        });
 
         btnConsulter.setText("Consulter");
         btnConsulter.setMaximumSize(new java.awt.Dimension(103, 32));
@@ -927,9 +998,8 @@ public class PaneAcceuil extends javax.swing.JPanel {
         System.out.println(jListDossiers.getModel().getElementAt(jListDossiers.getSelectionModel().getMaxSelectionIndex()));
         //Folder f=folds.searchFolder(jListDossiers.getModel().getElementAt(jListDossiers.getSelectionModel().getMaxSelectionIndex()));    
         //clean();
-        consulteur.execute();
+        consulteur.execute();       
         
-        if (type) {
             txtDPrenom.setEnabled(false);
             txtDNom.setEnabled(false);
             txtDMiddleName.setEnabled(false);
@@ -938,7 +1008,8 @@ public class PaneAcceuil extends javax.swing.JPanel {
             txtDREgion.setEnabled(false);
             txtDAdresse.setEnabled(false);
             txtDCourriel.setEnabled(false);            
-        }
+        
+            
 
 //            System.out.println(consulteur.get());
                 //setData(f);
@@ -1005,6 +1076,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
             if (type) { //Vérification du type d'utilisateur
                 //Mise à jour du dossier dans le cas d'un Enqueteur.
                 updateFolder();
+                UpdateDatasEn((Enqueteur) userUse);
             }
             else{
                
@@ -1012,10 +1084,10 @@ public class PaneAcceuil extends javax.swing.JPanel {
                 folderUse.getPatient().setAdresse(ManipFichier.parseAdresse(txtDAdresse.getText()));          
                 folderUse.getPatient().setSexe(jComboSexe.getModel().getSelectedItem().toString()) ;              
                 updateFolder();
-                //System.out.println("Test folder use :"+  folderUse.getPatient().toString());                
-                
+                //System.out.println("Test folder use :"+  folderUse.getPatient().toString());  
+                UpdateDatas();                
             }
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
              Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_btnEnregistrerActionPerformed
@@ -1024,10 +1096,53 @@ public class PaneAcceuil extends javax.swing.JPanel {
         //tabPrevious.getSelectionModel()
         tabPrevious.getSelectionModel().getMaxSelectionIndex();
     }//GEN-LAST:event_btnConsultActionPerformed
+
+    private void btnTelechargerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTelechargerActionPerformed
+        ChooserDeclaration = new JFileChooser(FileSystemView.getFileSystemView());
+        ChooserDeclaration.setVisible(true);
+        ChooserDeclaration.setFocusable(true);
+        ChooserDeclaration.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter restrictTxt = new FileNameExtensionFilter("Only .txt files", "txt");
+        FileNameExtensionFilter restrictBin = new FileNameExtensionFilter("Only .bin files", "bin");
+        ChooserDeclaration.addChoosableFileFilter(restrictTxt);
+        ChooserDeclaration.addChoosableFileFilter(restrictBin);
+        int r =ChooserDeclaration.showSaveDialog(null);
+        if (r == JFileChooser.APPROVE_OPTION) {
+            File f = ChooserDeclaration.getSelectedFile().getAbsoluteFile();
+            ManipFichier.lectureDeclaration(f,folds);
+            if (type) {               
+                UpdateDatasEn((Enqueteur) userUse);
+            }else
+                UpdateDatas();
+        }else
+            ChooserDeclaration.cancelSelection();
+        
+        
+    }//GEN-LAST:event_btnTelechargerActionPerformed
+
+    private void btnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifierActionPerformed
+        
+        if (!type) {
+            txtDREgion.setEnabled(true);
+            txtDAdresse.setEnabled(true);
+            txtDCourriel.setEnabled(true);
+        }else
+            try {
+                throw new AdminException("Seul les Agents ou Admin peuvent modifier un Dossier");
+        } catch (AdminException ex) {
+            //Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, ex);
+            txtAeraError.setText(ex.getMessage());
+            DialogErreur.setVisible(true);
+            DialogErreur.isFocusableWindow();
+        }
+        
+            
+    }//GEN-LAST:event_btnModifierActionPerformed
     
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFileChooser ChooserDeclaration;
     private javax.swing.JDialog DialogErreur;
     private javax.swing.JTable TabNDossier;
     private javax.swing.JTable Tab_notes;
@@ -1041,6 +1156,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
     private javax.swing.JButton btnFermer;
     private javax.swing.JButton btnModifier;
     private javax.swing.JButton btnSaveDec;
+    private javax.swing.JButton btnTelecharger;
     private javax.swing.JComboBox<String> jCBStatus;
     private javax.swing.JComboBox<String> jComboSexe;
     private javax.swing.JFrame jFDeclaration;
@@ -1125,31 +1241,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     
-    final SwingWorker<Folder, Folder> consulteur = new SwingWorker<Folder, Folder>(){
-        @Override
-        protected Folder doInBackground() throws Exception {
-            folderUse=folds.searchFolder(jListDossiers.getModel().getElementAt(jListDossiers.getSelectionModel().getMaxSelectionIndex()));
-            
-            return folderUse;
-        }
-
-        @Override
-        protected void done() {
-            //get resultat de doInBackground()
-            Folder fold;
-            try {
-                System.out.println("get doInBackground");
-                fold = get();
-                System.out.println("setData");
-                setData(fold);
-            } catch (InterruptedException | ExecutionException ex) {
-                Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-
-            
-    };
+    final SwingWorker<Folder, Folder> consulteur;
     private void clean(){
     txtDPrenom.setText("");
         txtDNom.setText("");
@@ -1180,10 +1272,14 @@ public class PaneAcceuil extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         
         //Vider JTable table
-        model.setRowCount(0);                
-        for (Declaration dec : episodes) { 
-            model.addRow(new Object[]{dec.getNoEven(),
-                dec.getResultat(),ManipFichier.toStringDate(dec.getDateDePre()),dec.getStatus(),ManipFichier.toStringDate(dec.getDateExecution())});
+        try {
+            model.setRowCount(0);            
+            for (Declaration dec : episodes) {                
+                model.addRow(new Object[]{dec.getNoEven(),
+                    dec.getResultat(), ManipFichier.toStringDate(dec.getDateDePre()), dec.getStatus(), ManipFichier.toStringDate(dec.getDateExecution())});
+            }
+        } catch (NullPointerException e) {
+            Logger.getLogger(PaneAcceuil.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     /**
@@ -1211,6 +1307,7 @@ public class PaneAcceuil extends javax.swing.JPanel {
         NouvelleDeclaration.setNomPatient(txtNomPatient.getText());
         NouvelleDeclaration.setDateDeNaissance(ManipFichier.StringToDate(txtDateDeNaissance.getText()));
         NouvelleDeclaration.setTel(txtDeTel.getText());
+        NouvelleDeclaration.setAdresse(ManipFichier.parseAdresse(txtDeAdresse.getText()));
         NouvelleDeclaration.setNumAssMAl(txtNumASsM.getText());
         NouvelleDeclaration.setNomDr(txtDrDemandeur.getText());
         NouvelleDeclaration.setNomDemande(txtNomDemande.getText());
@@ -1231,5 +1328,35 @@ public class PaneAcceuil extends javax.swing.JPanel {
         System.out.println("Nouvel: "+NouvelleDeclaration.toString());
         return NouvelleDeclaration;
     }
+    /**
+     * 
+     * @param e1
+     * @throws NullPointerException 
+     */
+        private void UpdateDatasEn(Enqueteur e1) throws NullPointerException {
+        DefaultListModel<String> model = new DefaultListModel<>();
+        for (Folder fo : folds.findFolders(e1)) {
+            model.addElement(String.valueOf( fo.getNumDossier()));
+        }
+        System.out.println("Voici vaux dossiers "+ e1.getMatricule()+":\n" + model);
+        jListDossiers.setModel(model);
+        // this.jListDossiers.setListData((String[]) folds.findFolders(e1).toArray()); 
+    }
+
+    /**
+     * 
+     */    
+    private void UpdateDatas() {
+        
+        DefaultListModel<String> model = new DefaultListModel<>();
+        
+        for(Folder fo: folds){
+            model.addElement(String.valueOf( fo.getNumDossier()));
+            System.out.println("chaque dossiers" + fo.getNumDossier());
+        }
+        System.out.println("Voici les dossiers :\n" + model);
+        jListDossiers.setModel(model);
+    }
+
 
 }

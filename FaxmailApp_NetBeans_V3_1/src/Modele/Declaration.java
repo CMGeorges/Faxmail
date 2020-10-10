@@ -17,11 +17,14 @@ import java.util.Date;
 public class Declaration implements Serializable, Comparable<Declaration>{
 //status
     //nummero d'evenement
-        private int noEven;
+        private long noEven;
 //Déclarant    
         private String declarant;
     //Patient
         private String nomPatient,sexe,numAssMAl,tel,status;
+        private Adresse adresse;
+
+    
     //Medecin
         private String nomDr,milieuDeConsultation,permis;
         private String adresseDuDemandeur;
@@ -31,6 +34,14 @@ public class Declaration implements Serializable, Comparable<Declaration>{
         private String typeDePre,siteDePre,nomDemande,analyse,resultat;
     
 
+        
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
     public String getPermis() {
         return permis;
     }
@@ -198,7 +209,7 @@ public class Declaration implements Serializable, Comparable<Declaration>{
  * @param analyse
  * @param resultat 
  */
-    public Declaration(int noEven, String declarant, String nomPatient, String sexe, String numAssMAl, Date dateDeNaissance, String tel, String status, String nomDr, String milieuDeConsultation, String adresseDuDemandeur, Date dateDePre, Date dateExecution, String typeDePre, String siteDePre, String nomDemande, String analyse, String resultat) {
+    public Declaration(long noEven, String declarant, String nomPatient, String sexe, String numAssMAl, Date dateDeNaissance, String tel,Adresse adresse, String status, String nomDr,String permis, String milieuDeConsultation, String adresseDuDemandeur, Date dateDePre, Date dateExecution, String typeDePre, String siteDePre, String nomDemande, String analyse, String resultat) {
         this.noEven = noEven;
         this.declarant = declarant;
         this.nomPatient = nomPatient;
@@ -206,8 +217,10 @@ public class Declaration implements Serializable, Comparable<Declaration>{
         this.numAssMAl = numAssMAl;
         this.dateDeNaissance = dateDeNaissance;
         this.tel = tel;
+        this.adresse=adresse;
         this.status = status;
         this.nomDr = nomDr;
+        this.permis=permis;
         this.milieuDeConsultation = milieuDeConsultation;
         this.adresseDuDemandeur = adresseDuDemandeur;
         this.dateDePre = dateDePre;
@@ -230,11 +243,11 @@ public class Declaration implements Serializable, Comparable<Declaration>{
             return 1;
     }
 
-    public int getNoEven() {
+    public long getNoEven() {
         return noEven;
     }
 
-    public void setNoEven(int noEven) {
+    public void setNoEven(long noEven) {
         this.noEven = noEven;
     }
 
