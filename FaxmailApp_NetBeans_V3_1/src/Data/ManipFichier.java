@@ -334,10 +334,14 @@ public class ManipFichier{
     }
     public static Date StringToDate(String dob) throws ParseException {
       //Instantiating the SimpleDateFormat class
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+      SimpleDateFormat formatter = new SimpleDateFormat("DD-MM-YYYY");
       //Parsing the given String to Date object
-      Date date = formatter.parse(dob);
-      System.out.println("Date object value: "+date);
+      Date date;  
+      if (dob==null||"".equals(dob)) {
+           date=null; 
+        }else
+            date= formatter.parse(dob);
+      //System.out.println("Date object value: "+date);
       return date;
    }
 
@@ -359,6 +363,10 @@ public class ManipFichier{
     }
 
     public static String toStringDate(Date dateDeNaissance) {
+        if (dateDeNaissance==null) {
+            return "";
+        }
+        System.out.println("Date trouver: "+dateDeNaissance);
         return dateDeNaissance.getDate()+"-"+dateDeNaissance.getMonth()+"-"+dateDeNaissance.getYear();
     }
 

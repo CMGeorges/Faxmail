@@ -97,8 +97,10 @@ public class FoldersList extends ArrayList<Folder> implements Affichage{
         if (exist!=true) {
             String id = declaration.getNumAssMAl().substring(4);
             String[] tokens = declaration.getNomPatient().split(",");
-            Folder newFolder = new Folder(Integer.parseInt(id),new Patient(Integer.parseInt(id),tokens[0], tokens[1], declaration.getAdresse().getVille(), declaration.getSexe(), declaration.getNumAssMAl(), null,null, declaration.getDateDeNaissance(), declaration.getAdresse()));
+            Folder newFolder = new Folder(Integer.parseInt(id),new Patient(Integer.parseInt(id),tokens[0], tokens[1], declaration.getAdresse().getVille(), declaration.getSexe(), declaration.getNumAssMAl(), null,null, declaration.getDateDeNaissance(), declaration.getAdresse()),new Episode());
+            newFolder.getEpisodes().add(declaration);
             this.addFolder(newFolder);
+            
             System.out.println("Nouveau dossier créer!! \n"+newFolder);
             this.display();
         }

@@ -14,6 +14,13 @@ import utilitaire.Affichage;
  * @author camsl
  */
 public class Episode extends ArrayList<Declaration> implements Affichage{
+
+    public Episode() {
+    }
+    
+    
+    
+    
     public Episode getEpisodes() {
         return this;
     }
