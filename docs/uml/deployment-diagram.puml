@@ -1,0 +1,29 @@
+@startuml
+title Faxmail Deployment Diagram
+
+node "Tenant Browser / Client" {
+  artifact "Admin UI or API Client"
+}
+
+node "Cloud App Service" {
+  component "Faxmail.Api"
+  component "Application Layer"
+  component "Infrastructure Layer"
+}
+
+node "Managed Database" {
+  database "Tenant Data Store"
+}
+
+node "Fax Provider Platform" {
+  artifact "Inbound/Outbound Fax Events"
+}
+
+"Admin UI or API Client" --> "Faxmail.Api"
+"Fax Provider Platform" --> "Faxmail.Api"
+"Faxmail.Api" --> "Application Layer"
+"Application Layer" --> "Infrastructure Layer"
+"Infrastructure Layer" --> "Tenant Data Store"
+
+@enduml
+

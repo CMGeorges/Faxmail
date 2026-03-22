@@ -1,0 +1,20 @@
+@startuml
+title Faxmail System Context
+
+actor "Operations User" as OperationsUser
+actor "Tenant Admin" as TenantAdmin
+actor "External Fax Provider" as FaxProvider
+
+rectangle "Faxmail SaaS Platform" {
+  usecase "Manage Tenant Fax Inbox" as UC1
+  usecase "Smart Intake and Routing" as UC2
+  usecase "Monitor SLA and Analytics" as UC3
+}
+
+OperationsUser --> UC1
+OperationsUser --> UC2
+TenantAdmin --> UC3
+FaxProvider --> UC2
+
+@enduml
+

@@ -1,0 +1,59 @@
+@startuml
+title Faxmail Domain Class Diagram
+
+class Tenant {
+  +Guid Id
+  +string Name
+  +string Slug
+  +string Plan
+  +bool IsActive
+}
+
+class FaxMessage {
+  +Guid Id
+  +Guid TenantId
+  +string ExternalReference
+  +string FromNumber
+  +string ToNumber
+  +string Subject
+  +FaxDirection Direction
+  +FaxStatus Status
+  +FaxPriority Priority
+  +BusinessArea BusinessArea
+  +int PageCount
+  +DateTime ReceivedAtUtc
+  +DateTime? DueByUtc
+  +string? AssignedTeam
+  +string? Tags
+}
+
+enum FaxDirection {
+  Inbound
+  Outbound
+}
+
+enum FaxStatus {
+  Received
+  Queued
+  Assigned
+  Completed
+  Failed
+}
+
+enum FaxPriority {
+  Normal
+  High
+  Critical
+}
+
+enum BusinessArea {
+  Operations
+  Clinical
+  Legal
+  Billing
+}
+
+Tenant "1" --> "many" FaxMessage : owns
+
+@enduml
+

@@ -1,0 +1,34 @@
+@startuml
+title Faxmail Component Diagram
+
+package "Faxmail.Api" {
+  [Minimal API Endpoints]
+}
+
+package "Faxmail.Application" {
+  [FaxOperationsService]
+  [Repository Abstractions]
+  [Contracts]
+}
+
+package "Faxmail.Domain" {
+  [Tenant]
+  [FaxMessage]
+  [Business Rules]
+}
+
+package "Faxmail.Infrastructure" {
+  [InMemoryTenantRepository]
+  [InMemoryFaxRepository]
+}
+
+[Minimal API Endpoints] --> [FaxOperationsService]
+[FaxOperationsService] --> [Repository Abstractions]
+[FaxOperationsService] --> [Business Rules]
+[InMemoryTenantRepository] ..|> [Repository Abstractions]
+[InMemoryFaxRepository] ..|> [Repository Abstractions]
+[Repository Abstractions] --> [Tenant]
+[Repository Abstractions] --> [FaxMessage]
+
+@enduml
+

@@ -9,3 +9,12 @@ Faxmail is now organized as a SaaS-ready .NET solution with clear boundaries:
 
 This structure creates a clean starting point for enterprise growth while staying small enough to evolve quickly.
 
+## UML
+
+Versioned UML documentation now lives in `docs/uml` and covers:
+
+- system context
+- component architecture
+- domain classes
+- smart intake sequence flow
+- SaaS deployment view

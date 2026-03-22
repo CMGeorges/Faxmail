@@ -1,0 +1,18 @@
+@startuml
+title Smart Intake Sequence
+
+actor "External Fax Provider" as Provider
+participant "Faxmail.Api" as Api
+participant "FaxOperationsService" as Service
+participant "InMemoryFaxRepository" as Repository
+
+Provider -> Api : POST /api/tenants/{tenantId}/faxes/intake
+Api -> Service : IntakeFaxAsync(tenantId, request)
+Service -> Service : BuildRoute(request)
+Service -> Repository : AddAsync(faxMessage)
+Repository --> Service : stored fax
+Service --> Api : RoutedFaxResponse
+Api --> Provider : 201 Created
+
+@enduml
+
