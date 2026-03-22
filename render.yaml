@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: faxmail-api
+    runtime: docker
+    plan: free
+    autoDeploy: true
+    healthCheckPath: /health
+

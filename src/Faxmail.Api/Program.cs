@@ -17,6 +17,13 @@ app.MapGet("/", () => Results.Ok(new
     capability = "Multi-tenant fax operations platform"
 }));
 
+app.MapGet("/health", () => Results.Ok(new
+{
+    status = "ok",
+    service = "faxmail-api",
+    utc = DateTime.UtcNow
+}));
+
 app.MapGet("/api/tenants", async (FaxOperationsService service, CancellationToken cancellationToken) =>
 {
     var tenants = await service.GetTenantsAsync(cancellationToken);
