@@ -10,9 +10,11 @@ public sealed class FaxMessage
     public required string Subject { get; init; }
     public FaxDirection Direction { get; init; }
     public FaxStatus Status { get; set; }
+    public FaxPriority Priority { get; set; }
+    public BusinessArea BusinessArea { get; set; }
     public int PageCount { get; init; }
     public DateTime ReceivedAtUtc { get; init; }
+    public DateTime? DueByUtc { get; set; }
     public string? AssignedTeam { get; set; }
     public string? Tags { get; set; }
 }
-

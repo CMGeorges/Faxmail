@@ -4,5 +4,7 @@ public sealed record CreateFaxRequest(
     string FromNumber,
     string ToNumber,
     string Subject,
-    int PageCount);
+    int PageCount,
+    string? ReceivedChannel,
+    bool IsVipSender);
 

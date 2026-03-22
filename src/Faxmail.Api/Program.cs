@@ -32,13 +32,27 @@ app.MapGet("/api/tenants/{tenantId:guid}/faxes", async (Guid tenantId, FaxOperat
 app.MapPost("/api/tenants/{tenantId:guid}/faxes/intake", async (Guid tenantId, CreateFaxRequest request, FaxOperationsService service, CancellationToken cancellationToken) =>
 {
     var fax = await service.IntakeFaxAsync(tenantId, request, cancellationToken);
-    return Results.Created($"/api/tenants/{tenantId}/faxes/{fax.Id}", fax);
+    var response = new RoutedFaxResponse(
+        fax.Id,
+        fax.ExternalReference,
+        fax.BusinessArea,
+        fax.Priority,
+        fax.AssignedTeam ?? "Unassigned",
+        fax.DueByUtc);
+
+    return Results.Created($"/api/tenants/{tenantId}/faxes/{fax.Id}", response);
 });
 
 app.MapGet("/api/tenants/{tenantId:guid}/dashboard", async (Guid tenantId, FaxOperationsService service, CancellationToken cancellationToken) =>
 {
     var dashboard = await service.GetDashboardAsync(tenantId, cancellationToken);
     return dashboard is null ? Results.NotFound() : Results.Ok(dashboard);
+});
+
+app.MapGet("/api/tenants/{tenantId:guid}/analytics", async (Guid tenantId, FaxOperationsService service, CancellationToken cancellationToken) =>
+{
+    var analytics = await service.GetAnalyticsAsync(tenantId, cancellationToken);
+    return analytics is null ? Results.NotFound() : Results.Ok(analytics);
 });
 
 app.Run();

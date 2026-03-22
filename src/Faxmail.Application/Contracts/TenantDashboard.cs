@@ -5,5 +5,5 @@ public sealed record TenantDashboard(
     string TenantName,
     int TotalFaxes,
     int AssignedFaxes,
-    int CompletedFaxes);
-
+    int CompletedFaxes,
+    int OverdueFaxes);

@@ -45,11 +45,23 @@ public sealed class InMemoryFaxRepository : IFaxRepository
                 Subject = subject,
                 Direction = FaxDirection.Inbound,
                 Status = FaxStatus.Received,
+                Priority = FaxPriority.Normal,
+                BusinessArea = BusinessArea.Operations,
                 PageCount = 4,
                 ReceivedAtUtc = DateTime.UtcNow.AddMinutes(-20),
+                DueByUtc = DateTime.UtcNow.AddMinutes(40),
+                AssignedTeam = "Shared Operations",
                 Tags = "seed"
             }
         ];
     }
-}
 
+    public Task<FaxMessage?> GetByIdAsync(Guid tenantId, Guid faxId, CancellationToken cancellationToken)
+    {
+        var items = _tenantFaxes.GetOrAdd(tenantId, _ => []);
+        return Task.FromResult(items.SingleOrDefault(f => f.Id == faxId));
+    }
+
+    public Task<FaxMessage> UpdateAsync(FaxMessage faxMessage, CancellationToken cancellationToken) =>
+        Task.FromResult(faxMessage);
+}
